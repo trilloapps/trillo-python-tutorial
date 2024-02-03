@@ -1,0 +1,7 @@
+{
+  "functionName" : "QueryDatasetBigQuery",
+  "methodName" : "getBqDatasetTables",
+  "parameters" : {
+  	"datasetName" : "trilloTutorial"
+  }
+}
