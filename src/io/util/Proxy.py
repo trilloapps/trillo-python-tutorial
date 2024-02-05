@@ -118,7 +118,6 @@ class Proxy:
             cls.log.error(f"Failed to login: {exc}")
             return False
 
-
     @classmethod
     def remoteCall(cls, javaClassName: str, javaMethodName: str, *args) -> object:
         data = {
@@ -138,7 +137,7 @@ class Proxy:
         }
         try:
             response = requests.post(
-                f"{cls.serverUrl}/ds/remoteCall",
+                f"{cls.getServerUrl()}/ds/remoteCall",
                 headers=headers,
                 json=data,
             )
@@ -146,7 +145,7 @@ class Proxy:
             try:
                 result = response.json()
                 if isinstance(result, dict) and result.get("_rtag") == "_r_":
-                    return Result.fromDict(result)
+                    return Result.convertDictToResult(result)
                 return result
             except json.JSONDecodeError:
                 # Not a valid JSON response, return content as string
@@ -196,4 +195,3 @@ class Proxy:
     @classmethod
     def isPrivilegedUserMode(cls) -> bool:
         return cls.privilegedUserMode
-

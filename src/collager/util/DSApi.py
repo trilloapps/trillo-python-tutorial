@@ -1,11 +1,38 @@
 from multimethods import multimethod
+
+from src.collager.model.DataIterator import DataIterator
 from src.collager.util.HttpRequestUtil import HttpRequestUtil
+from src.io.RunFunction import Proxy
 
 dataBaseEndpoint = "/api/v1.1/data"
 
 
 def getPage(dataRequestAsMap):
-    return HttpRequestUtil.post(dataBaseEndpoint + "/page", dataRequestAsMap)
+    return Proxy.remoteCall("DSApi", "getPage", dataRequestAsMap)
+
+
+@multimethod(str, str, str, int, int)
+def getDataIterator(className, where, orderBy, start, pageSize):
+    return DataIterator(className, where, orderBy, start, pageSize)
+
+
+@multimethod(int, int, str)
+def getDataIterator(start, pageSize, sqlQuery):
+    return DataIterator(start, pageSize, sqlQuery)
+
+@multimethod(str, str, int, int, str)
+def getDataIterator(appName, dsName, start, pageSize, sqlQuery):
+    return DataIterator(appName, dsName, start, pageSize, sqlQuery)
+
+
+@multimethod(int, int, str, bool)
+def getDataIterator(start, pageSize, sqlQuery, orderById):
+    return DataIterator(start, pageSize, sqlQuery, orderById)
+
+
+@multimethod(int, int, str, str, bool)
+def getDataIterator(start, pageSize, sqlQuery, idAttrName, orderById):
+    return DataIterator(start, pageSize, sqlQuery, idAttrName, orderById)
 
 
 def get(className, id):
@@ -20,13 +47,15 @@ def queryOne(className, query):
 @multimethod(str, str, bool)
 def queryOne(className, query, includeDeleted):
     return HttpRequestUtil.get(
-        dataBaseEndpoint + "/queryOne/" + str(className) + "?query=" + str(query) + "&includeDeleted=" + str(includeDeleted))
+        dataBaseEndpoint + "/queryOne/" + str(className) + "?query=" + str(query) + "&includeDeleted=" + str(
+            includeDeleted))
 
 
 @multimethod(str, str, bool)
 def queryMany(className, query, includeDeleted):
     return HttpRequestUtil.get(
-        dataBaseEndpoint + "/queryMany/" + str(className) + "?query=" + str(query) + "&includeDeleted=" + str(includeDeleted))
+        dataBaseEndpoint + "/queryMany/" + str(className) + "?query=" + str(query) + "&includeDeleted=" + str(
+            includeDeleted))
 
 
 @multimethod(str, str)
@@ -50,7 +79,8 @@ def queryBySqlStatement(dsName, sqlStatement):
 @multimethod(str, str, dict)
 def queryBySqlStatement(dsName, sqlStatement, params):
     return HttpRequestUtil.get(
-        dataBaseEndpoint + "/queryBySqlStatement?sqlStatement=" + sqlStatement + "&dsName=" + dsName + "&params=" + str(params))
+        dataBaseEndpoint + "/queryBySqlStatement?sqlStatement=" + sqlStatement + "&dsName=" + dsName + "&params=" + str(
+            params))
 
 
 def save(className, entity):
@@ -117,7 +147,8 @@ def deleteMany(className, ids, isPermanent):
 
 def deleteByQuery(className, query, isPermanent):
     return HttpRequestUtil.post(
-        dataBaseEndpoint + "/deleteByQuery/" + className + "?query=" + str(query) + "&permanent=" + str(isPermanent), {})
+        dataBaseEndpoint + "/deleteByQuery/" + className + "?query=" + str(query) + "&permanent=" + str(isPermanent),
+        {})
 
 
 def bulkOp(className, opName, entities):
@@ -137,6 +168,16 @@ def executePreparedStatement(dataSourceName, sqlStatement, parameters):
     }
     return HttpRequestUtil.post(
         dataBaseEndpoint + "/executePreparedStatement/" + dataSourceName, body)
+
+
+@multimethod(str, str, dict)
+def executeSqlWriteStatement(dataSourceName, sqlStatement, parameters):
+    body = {
+        "sqlStatement": sqlStatement,
+        "parameters": parameters
+    }
+    return HttpRequestUtil.post(
+        dataBaseEndpoint + "/executeSqlWriteStatement/" + dataSourceName, body)
 
 
 @multimethod(str, str, dict)

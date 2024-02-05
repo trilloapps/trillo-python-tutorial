@@ -1,6 +1,7 @@
 from multimethods import multimethod
 from src.collager.util import Util
 from src.collager.util.HttpRequestUtil import HttpRequestUtil
+from src.io.RunFunction import Proxy
 
 functionBaseEndpoint = "/api/v1.1/func"
 
@@ -38,23 +39,19 @@ def executeFunction(appName, functionName, methodName, params, preAuthCall):
 
 @multimethod(str, str, dict)
 def executeFunctionWithMethod(functionName, methodName, params):
-    body = {
-        "methodName": methodName,
-        "params": params
-    }
-    res = HttpRequestUtil.post(functionBaseEndpoint + "/executeFunctionWithMethod/" + functionName, body)
-    return Util.convertToResult(res)
-
+    return Proxy.remoteCall("CoreFuncApi", "executeFunctionWithMethod", functionName, methodName, params)
 
 @multimethod(str, str, str, dict)
 def executeFunctionWithMethod(appName, functionName, methodName, params):
-    body = {
-        "appName": appName,
-        "methodName": methodName,
-        "params": params
-    }
-    res = HttpRequestUtil.post(functionBaseEndpoint + "/executeFunctionWithMethod/" + functionName, body)
-    return Util.convertToResult(res)
+    # body = {
+    #     "appName": appName,
+    #     "methodName": methodName,
+    #     "params": params
+    # }
+    # res = HttpRequestUtil.post(functionBaseEndpoint + "/executeFunctionWithMethod/" + functionName, body)
+    # return Util.convertToResult(res)
+    return Proxy.remoteCall("CoreFuncApi", "executeFunctionWithMethod",
+      functionName, methodName, params)
 
 
 @multimethod(str, str, str, dict)
