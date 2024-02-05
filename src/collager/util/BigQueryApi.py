@@ -254,7 +254,7 @@ def importJSONbyURIIntoTable(datasetName, tableName, sourceUri):
 
 
 @multimethod(str, str, str, list)
-def importJSONbyURIIntoTable(datasetName: str, tableName: str, sourceUri: str, schema: list):
+def importJSONbyURIIntoTable(datasetName, tableName, sourceUri, schema):
     body = {
         "datasetName": datasetName,
         "tableName": tableName,

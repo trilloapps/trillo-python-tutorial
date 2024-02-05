@@ -45,7 +45,7 @@ def getSignedUrl(bucketName, filePath, duration, unit):
 @multimethod(str, str)
 def getSignedUrl(bucketName, filePath):
     res = HttpRequestUtil.get(
-        storageBaseEndpoint + "/getSignedUrl?bucketName=" + "/getSignedUrl?bucketName=" + bucketName + "&filePath=" + filePath)
+        storageBaseEndpoint + "/getSignedUrl?bucketName=" + bucketName + "&filePath=" + filePath)
     return HttpRequestUtil.HttpResponseToString(res)
 
 
