@@ -54,7 +54,10 @@ class HttpRequestUtil:
             ssl_context = ssl.create_default_context()
             ssl_context.check_hostname = False
             ssl_context.verify_mode = ssl.CERT_NONE
-            body_str = json.dumps(vars(body), indent=2)
+            if isinstance(body, dict):
+                body_str = json.dumps(body, indent=2)
+            else :
+                body_str = json.dumps(vars(body), indent=2)
             conn = HTTPSConnection(url.netloc, context=ssl_context)
             conn.request("POST", quote(url.geturl(), safe=':/=?&'), body=body_str, headers=headers)
             response = conn.getresponse()
