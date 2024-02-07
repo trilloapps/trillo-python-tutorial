@@ -1,11 +1,7 @@
 from typing import List, Union, Dict
 
 from src.collager.util import Util
-
-try:
-  from src.io.RunFunction import Proxy
-except:
-  from src.io.util.Proxy import Proxy
+from src.io.util.Proxy import Proxy
 
 class GCPGenApi():
 
