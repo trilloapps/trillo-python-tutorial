@@ -17,7 +17,7 @@ def iterate(parameters):
     r = dataIterator.initialize()
 
     if r.isFailed():
-        Log.error("Failed to initialize DataIterator", "error", r.getMessage())
+        Log.error("Failed to initialize DataIterator: " + r.getMessage())
         return r
 
     total_count = dataIterator.getTotalItems()

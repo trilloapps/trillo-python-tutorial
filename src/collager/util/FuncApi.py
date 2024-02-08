@@ -1,7 +1,7 @@
 from multimethods import multimethod
 from src.collager.util import Util
 from src.collager.util.HttpRequestUtil import HttpRequestUtil
-from src.io.RunFunction import Proxy
+from src.io.util.Proxy import Proxy
 
 functionBaseEndpoint = "/api/v1.1/func"
 

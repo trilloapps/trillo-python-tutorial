@@ -12,7 +12,7 @@ def summarizeText(parameters):
 
 def chat(parameters):
     if "messages" not in parameters:
-        return Result.getFailedResult("messages1 is missing")
+        return Result.getFailedResult("messages is missing")
     # call GCPGenApi to send messages
     Log.info("Sending request to chat...")
     res = GCPGenApi.chat(parameters)

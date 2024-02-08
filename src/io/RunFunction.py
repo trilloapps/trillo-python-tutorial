@@ -5,7 +5,7 @@ import sys
 from importlib import import_module
 
 from src.collager.pojo.ResultApi import Result
-from util.Proxy import Proxy
+from src.io.util.Proxy import Proxy
 from src.collager.util.Util import *
 from src.collager.util.BaseApi import BaseApi
 from src.collager.util.LogApi import Log

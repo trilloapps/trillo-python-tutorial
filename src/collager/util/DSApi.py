@@ -2,7 +2,7 @@ from multimethods import multimethod
 
 from src.collager.model.DataIterator import DataIterator
 from src.collager.util.HttpRequestUtil import HttpRequestUtil
-from src.io.RunFunction import Proxy
+from src.io.util.Proxy import Proxy
 
 dataBaseEndpoint = "/api/v1.1/data"
 
