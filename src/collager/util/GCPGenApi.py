@@ -3,7 +3,8 @@ from typing import List, Union, Dict
 from src.collager.util import Util
 from src.io.util.Proxy import Proxy
 
-class GCPGenApi():
+
+class GCPGenApi:
 
     @staticmethod
     def chat(params: Dict[str, Union[str, int]]) -> object:

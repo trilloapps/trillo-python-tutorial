@@ -1,6 +1,4 @@
 from uuid import UUID
-
-from src.collager.pojo.ResultApi import Result
 from src.collager.util import FuncApi, LogApi
 
 
