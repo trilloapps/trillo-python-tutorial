@@ -1,44 +1,37 @@
-from typing import Any, Dict
+from typing import Dict
 
-from src.collager.pojo.RuntimeContext import RuntimeContext
 from src.io.util.Proxy import Proxy
 
 
-class ScriptParameter(RuntimeContext):
-
+class ScriptParameter:
     def __init__(self):
         super().__init__()
 
     @classmethod
-    def make_script_parameter(cls, input_data: Any, state_map: Dict[str, Any], task_name: str = None,
-                              execution_id: int = -1):
+    def makeScriptParameter(cls, inputData, stateMap=None, taskName=None, executionId=-1):
         p = ScriptParameter()
-        p.set_v(input_data)
+        p.setV(inputData)
+        if stateMap:
+            p.update(stateMap)
+        p.setTaskName(taskName)
+        p.setExecutionId(executionId)
+        loginResponse = Proxy.getLoginResponse()
 
-        if state_map is not None:
-            p.update(state_map)
+        user = loginResponse.get("user")
+        if isinstance(user, dict):
+            p.idOfUser = user.get("id", -1)
+            p.userId = user.get("userId", "")
+            p.firstName = user.get("firstName", "")
+            p.lastName = user.get("lastName", "")
+            p.email = user.get("email", "")
+            p.userOrgName = user.get("orgName", "")
+            p.externalId = user.get("externalId", "")
+            p.role = user.get("role", "")
+            p.emailVerified = bool(user.get("emailVerified", ""))
+            p.tenantId = user.get("tenantId", "")
+            p.tenantName = user.get("tenantName", "")
+            p.userOrgId = user.get("orgId", -1)
 
-        p.set_task_name(task_name)
-        p.set_execution_id(execution_id)
-
-        login_response = Proxy.get_login_response()
-
-        if isinstance(login_response.get("user"), dict):
-            um = login_response.get("user")
-            p.set_id_of_user(int(um.get("id", -1)))
-            p.set_user_id(um.get("userId"))
-            p.set_first_name(um.get("firstName"))
-            p.set_last_name(um.get("lastName"))
-            p.set_email(um.get("email"))
-            p.set_user_org_name(um.get("orgName"))
-            p.set_external_id(um.get("externalId"))
-            p.set_role(um.get("role"))
-            p.set_email_verified(bool(um.get("emailVerified")))
-            p.set_tenant_id(um.get("tenantId"))
-            p.set_tenant_name(um.get("tenantName"))
-            p.set_user_org_id(int(um.get("orgId", -1)))
-
-        p.set_app_name(Proxy.get_app_name())
-        p.set_org_name(Proxy.get_org_name())
-
+        p.appName = Proxy.getAppName()
+        p.orgName = Proxy.getOrgName()
         return p
