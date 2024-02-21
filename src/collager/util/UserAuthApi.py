@@ -1,4 +1,4 @@
-from src.collager.util import Util
+from src.collager.util.Util import Util
 from src.collager.util.HttpRequestUtil import HttpRequestUtil
 
 umBaseEndpoint = "/api/v1.1/userAuth"
