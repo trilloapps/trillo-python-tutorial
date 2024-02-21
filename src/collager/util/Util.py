@@ -14,6 +14,19 @@ class Util:
             raise RuntimeError("Failed to stringify object.\n" + str(exc))
 
     @staticmethod
+    def convertToResult(r):
+        if isinstance(r, Result):
+            return r
+        try:
+            if isinstance(r, dict) and "_rtag" in r:
+                result = Result.convertDictToResult(r)
+                return result
+        except Exception as exc:
+            return None
+
+        return None
+
+    @staticmethod
     def asJSONString(obj: Any) -> str:
         try:
             return json.dumps(obj)
@@ -76,20 +89,6 @@ class Util:
     def deepCopy(input_map: Dict[str, Any]) -> Dict[str, Any]:
         # Implementation of deepCopy method is omitted as it requires JSON serialization/deserialization
         pass
-
-    @staticmethod
-    def convertToResult(r):
-        if isinstance(r, Result):
-            return r
-
-        try:
-            if isinstance(r, dict) and "_rtag" in r:
-                result = Result.convertDictToResult(r)
-                return result
-        except Exception as exc:
-            return None
-
-        return None
 
     @staticmethod
     def convertToListOfDict(input_object):

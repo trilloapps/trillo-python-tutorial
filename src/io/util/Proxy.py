@@ -103,7 +103,7 @@ class Proxy:
                 f"{cls.serverUrl}/ajaxLogin",
                 headers=headers,
                 json=data,
-                verify=False
+                verify=True
             )
             response.raise_for_status()
             cls.loginResponse = response.json()
@@ -141,7 +141,7 @@ class Proxy:
                 f"{cls.getServerUrl()}/ds/remoteCall",
                 headers=headers,
                 json=data,
-                verify=False
+                verify=True
             )
             response.raise_for_status()
             try:

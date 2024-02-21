@@ -8,7 +8,7 @@ from typing import Union
 
 
 from src.collager.pojo.ResultApi import Result
-from src.collager.util import Util
+from src.collager.util.Util import Util
 from src.io.util.Proxy import Proxy
 
 

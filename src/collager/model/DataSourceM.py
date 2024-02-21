@@ -2,7 +2,7 @@ import logging
 from typing import Dict, List
 
 from src.collager.model.ClassM import ClassM
-from src.collager.util import Util
+from src.collager.util.Util import Util
 
 
 class DataSourceM:

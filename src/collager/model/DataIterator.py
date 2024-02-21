@@ -4,7 +4,8 @@ from dataclasses import dataclass
 from src.collager.model.DataRequest import DataRequest
 from src.collager.model.DataResult import DataResult
 from src.collager.pojo.ResultApi import Result
-from src.collager.util import Util, DSApi
+from src.collager.util.Util import Util
+from src.collager.util import DSApi
 from src.collager.util.CoreDSUtil import CoreDSUtil
 from src.collager.util.LogApi import Log
 

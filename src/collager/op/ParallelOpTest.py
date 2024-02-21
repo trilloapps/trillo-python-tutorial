@@ -2,7 +2,7 @@ from datetime import time
 
 from src.collager.op.ParallelOp import ParallelOp
 from src.collager.pojo.ResultApi import Result
-from src.collager.util import Util
+from src.collager.util.Util import Util
 from src.collager.util.LogApi import Log
 
 
