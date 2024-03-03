@@ -1,12 +1,15 @@
 from multimethods import multimethod
 
 from src.collager.model.DataIterator import DataIterator
+from src.collager.model.DataRequest import DataRequest
+from src.collager.model.DataResult import DataResult
 from src.collager.util.HttpRequestUtil import HttpRequestUtil
 from src.io.util.Proxy import Proxy
 
 dataBaseEndpoint = "/api/v1.1/data"
 
 
+@multimethod(dict)
 def getPage(dataRequestAsMap):
     return Proxy.remoteCall("DSApi", "getPage", dataRequestAsMap)
 
@@ -19,6 +22,7 @@ def getDataIterator(className, where, orderBy, start, pageSize):
 @multimethod(int, int, str)
 def getDataIterator(start, pageSize, sqlQuery):
     return DataIterator(start, pageSize, sqlQuery)
+
 
 @multimethod(str, str, int, int, str)
 def getDataIterator(appName, dsName, start, pageSize, sqlQuery):
