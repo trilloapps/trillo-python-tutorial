@@ -1,10 +1,14 @@
 from typing import List, Dict
 
 class DataResult:
-    def __init__(self):
+    def __init__(self, d=None):
         self.items = None
         self.totalItems = 0
         self.start = 0
+
+        if d is not None:
+            for key, value in d.items():
+                setattr(self, key, value)
 
     def getItems(self) -> List[object]:
         return self.items
