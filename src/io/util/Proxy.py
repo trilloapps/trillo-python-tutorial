@@ -152,6 +152,9 @@ class Proxy:
             except json.JSONDecodeError:
                 # Not a valid JSON response, return content as string
                 return response.text
+            except requests.exceptions.JSONDecodeError:
+                # Not a valid JSON response, return content as string
+                return response.text
         except Exception as exc:
             cls.log.error(f"Failed remoteCall: {exc}")
             return Result.getFailedResult(f"Failed remoteCall: {exc}")

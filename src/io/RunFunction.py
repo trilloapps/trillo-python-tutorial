@@ -136,7 +136,7 @@ class RunFunction:
             res = f(parameters)
             if isinstance(res, str):
                 Log.info("Result: \n" + res)
-            if isinstance(res, Result):
+            elif isinstance(res, Result):
                 Log.info("Result: \n" + BaseApi.asJSONPrettyString(Result.convertResultToDict(res)))
             else:
                 Log.info("Result: \n" + BaseApi.asJSONPrettyString(res))

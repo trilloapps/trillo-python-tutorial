@@ -2,6 +2,7 @@ from multimethods import multimethod
 
 from src.collager.util.Util import Util
 from src.collager.util.HttpRequestUtil import HttpRequestUtil
+from src.io.util.Proxy import Proxy
 
 storageBaseEndpoint = "/api/v1.1/storage"
 
@@ -45,8 +46,7 @@ def getSignedUrl(bucketName, filePath, duration, unit):
 
 @multimethod(str, str)
 def getSignedUrl(bucketName, filePath):
-    res = HttpRequestUtil.get(
-        storageBaseEndpoint + "/getSignedUrl?bucketName=" + bucketName + "&filePath=" + filePath)
+    res = Proxy.remoteCall("StorageApi", "getSignedUrl", bucketName, filePath)
     return HttpRequestUtil.HttpResponseToString(res)
 
 
