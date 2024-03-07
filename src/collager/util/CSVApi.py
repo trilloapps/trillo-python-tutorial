@@ -62,6 +62,7 @@ def csvWriteFile(fileName, separator, columnNames, columnNameLine, rows):
             "columnNameLine": columnNameLine,
             "rows": rows
         }
+        res = HttpRequestUtil.post(csvBaseEndpoint + "/csvWriteFile", body)
     return Util.convertToResult(res)
 
 
