@@ -54,6 +54,8 @@ class HttpRequestUtil:
             ssl_context.verify_mode = ssl.CERT_NONE
             if isinstance(body, dict):
                 body_str = json.dumps(body, indent=2)
+            elif isinstance(body, list):
+                body_str = json.dumps(body, indent=2)
             else :
                 body_str = json.dumps(vars(body), indent=2)
             conn = HTTPSConnection(url.netloc, context=ssl_context)
