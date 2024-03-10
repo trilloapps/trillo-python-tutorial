@@ -1,4 +1,3 @@
-from multimethods import multimethod
 from src.collager.util.HttpRequestUtil import HttpRequestUtil
 cacheBaseEndpoint = "/api/v1.1/cache"
 

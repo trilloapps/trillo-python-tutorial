@@ -13,8 +13,7 @@ class GCPGenApi:
 
     @staticmethod
     def summarizeText(text: str) -> 'Result':
-        res = Proxy.remoteCall("GCPGenApi", "summarizeText", text)
-        return Util.convertToResult(res)
+        return BaseApi.remoteCallAsResult("GCPGenApi", "summarizeText", text)
 
     @staticmethod
     def classifyText(inputClasses: List[str], text: str) -> 'Result':
@@ -39,6 +38,7 @@ class GCPGenApi:
     @staticmethod
     def generateCode(prompt: str) -> 'Result':
         return BaseApi.remoteCallAsResult("GCPGenApi", "generateCode", prompt)
+    
 
     @staticmethod
     def text(prompt: str) -> 'Result':

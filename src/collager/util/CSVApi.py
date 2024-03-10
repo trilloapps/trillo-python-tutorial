@@ -1,6 +1,5 @@
 from multimethods import multimethod
 from src.collager.util.Util import Util
-from src.collager.util.BaseApi import BaseApi
 from src.collager.util.HttpRequestUtil import HttpRequestUtil
 
 csvBaseEndpoint = "/api/v1.1/csv"

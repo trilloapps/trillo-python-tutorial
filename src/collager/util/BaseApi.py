@@ -1,8 +1,7 @@
 import json
 import logging
-import os
 import uuid
-from datetime import time
+import time
 from typing import Union
 
 
@@ -26,24 +25,20 @@ class BaseApi:
 
 
     @staticmethod
-    def successResult() -> Result:
-        return Result.getSuccessResult()
+    def successResult(msg: str = None, data: object = None) -> Result:
+        if msg is not None and data is not None:
+            return Result.getSuccessResult(msg, data)
+        elif msg is not None:
+            return Result.getSuccessResult(msg)
+        else:
+            return Result.getSuccessResult()
 
     @staticmethod
-    def successResult(msg: str) -> Result:
-        return Result.getSuccessResult(msg)
-
-    @staticmethod
-    def successResult(msg: str, data: object) -> Result:
-        return Result.getSuccessResult(msg, data)
-
-    @staticmethod
-    def errorResult(msg: str) -> Result:
-        return Result.getFailedResult(msg)
-
-    @staticmethod
-    def errorResult(msg: str, code: int) -> Result:
-        return Result.getFailedResult(msg, code)
+    def errorResult(msg: str, code: int = None) -> Result:
+        if code is not None:
+            return Result.getFailedResult(msg, code)
+        else:
+            return Result.getFailedResult(msg)
 
     @staticmethod
     def extractMessage(obj: object) -> str:
@@ -76,7 +71,7 @@ class BaseApi:
     @staticmethod
     def waitForMillis(tm: int) -> Result:
         try:
-            time.sleep(tm / 1000)
+            time.sleep(tm/1000)
             return Result.getSuccessResult()
         except Exception as e:
             return Result.getFailedResult(e.getLocalizedMessage())
@@ -95,11 +90,11 @@ class BaseApi:
 
     @staticmethod
     def remoteCall(java_class_name: str, java_method_name: str, *args: object) -> object:
-        return Proxy.remoteCall(java_class_name, java_method_name, args)
+        return Proxy.remoteCall(java_class_name, java_method_name, *args)
 
     @staticmethod
     def remoteCallAsResult(java_class_name: str, java_method_name: str, *args: object) -> Result:
-        res = Proxy.remoteCall(java_class_name, java_method_name, args)
+        res = Proxy.remoteCall(java_class_name, java_method_name, *args)
         if isinstance(res, Result):
             return res
         raise RuntimeError("Unexpected type")
@@ -107,7 +102,7 @@ class BaseApi:
     @staticmethod
     def remoteCallAsMap(java_class_name: str, java_method_name: str, *args: object) -> dict[
         str, Union[str, int, float, bool, None]]:
-        res = Proxy.remoteCall(java_class_name, java_method_name, args)
+        res = Proxy.remoteCall(java_class_name, java_method_name, *args)
         if isinstance(res, dict):
             return res
         if isinstance(res, Result):
@@ -117,7 +112,7 @@ class BaseApi:
 
     @staticmethod
     def remoteCallAsString(java_class_name: str, java_method_name: str, *args: object) -> str:
-        res = Proxy.remoteCall(java_class_name, java_method_name, args)
+        res = Proxy.remoteCall(java_class_name, java_method_name, *args)
         if isinstance(res, str):
             return res
         if res is not None:
@@ -126,7 +121,7 @@ class BaseApi:
 
     @staticmethod
     def remoteCallAsBoolean(java_class_name: str, java_method_name: str, *args: object) -> bool:
-        res = Proxy.remoteCall(java_class_name, java_method_name, args)
+        res = Proxy.remoteCall(java_class_name, java_method_name, *args)
         if isinstance(res, bool):
             return res
         if isinstance(res, Result):
@@ -136,7 +131,7 @@ class BaseApi:
 
     @staticmethod
     def remoteCallAsList(java_class_name: str, java_method_name: str, *args: object) -> list[object]:
-        res = Proxy.remoteCall(java_class_name, java_method_name, args)
+        res = Proxy.remoteCall(java_class_name, java_method_name, *args)
         if isinstance(res, list):
             return res
         if isinstance(res, Result):
@@ -147,7 +142,7 @@ class BaseApi:
     @staticmethod
     def remoteCallAsListOfMaps(java_class_name: str, java_method_name: str, *args: object) -> list[
         dict[str, Union[str, int, float, bool, None]]]:
-        res = Proxy.remoteCall(java_class_name, java_method_name, args)
+        res = Proxy.remoteCall(java_class_name, java_method_name, *args)
         if isinstance(res, list):
             return res
         if isinstance(res, Result):
@@ -160,7 +155,7 @@ class BaseApi:
         if BaseApi.isBlank(class_name):
             return Util.SHARED_APP_NAME
 
-        sl = class_name.split("\\.")
+        sl = class_name.split(".")
         if len(sl) > 2:
             # <appName>.<dsName>.<className> pattern
             # <appName>.<className> pattern
@@ -173,7 +168,7 @@ class BaseApi:
         if BaseApi.isBlank(function_name):
             return Util.SHARED_APP_NAME
 
-        sl = function_name.split("\\.")
+        sl = function_name.split(".")
         if len(sl) > 2:
             # <appName>.<functionName> pattern
             return sl[0]
@@ -185,7 +180,7 @@ class BaseApi:
         if BaseApi.isBlank(class_name):
             return Util.COMMON_DS_NAME
 
-        sl = class_name.split("\\.")
+        sl = class_name.split(".")
         if len(sl) > 2:
             # <appName>.<dsName>.<className> pattern
             return sl[1]
@@ -200,7 +195,7 @@ class BaseApi:
         if class_name is None:
             return ""
 
-        sl = class_name.split("\\.")
+        sl = class_name.split(".")
         if len(sl) > 2:
             if len(sl) == 3:
                 # <appName>.<dsName>.<className> pattern
@@ -220,7 +215,7 @@ class BaseApi:
         if BaseApi.isBlank(ds):
             return Util.SHARED_APP_NAME
 
-        sl = ds.split("\\.")
+        sl = ds.split(".")
         if len(sl) == 2:
             # <appName>.<dsName> pattern
             return sl[0]
@@ -232,7 +227,7 @@ class BaseApi:
         if BaseApi.isBlank(ds_name):
             return Util.COMMON_DS_NAME
 
-        sl = ds_name.split("\\.")
+        sl = ds_name.split(".")
         if len(sl) == 2:
             # <appName>.<dsName> pattern
             return sl[1]
@@ -244,7 +239,7 @@ class BaseApi:
         if BaseApi.isBlank(flow_name):
             return Util.SHARED_APP_NAME
 
-        sl = flow_name.split("\\.")
+        sl = flow_name.split(".")
         if len(sl) > 2:
             # <appName>.<flowName> pattern
             return sl[0]
@@ -256,7 +251,7 @@ class BaseApi:
         if BaseApi.isBlank(function_name):
             return ""
 
-        sl = function_name.split("\\.")
+        sl = function_name.split(".")
         if len(sl) == 2:
             return sl[1]
 
@@ -267,7 +262,7 @@ class BaseApi:
         if class_name is None:
             return ""
 
-        sl = class_name.split("\\.")
+        sl = class_name.split(".")
         if len(sl) > 1:
             return sl[len(sl) - 2]
 
@@ -278,7 +273,7 @@ class BaseApi:
         if BaseApi.isBlank(flow_name):
             return ""
 
-        sl = flow_name.split("\\.")
+        sl = flow_name.split(".")
         if len(sl) == 2:
             return sl[1]
 
@@ -289,7 +284,7 @@ class BaseApi:
         if class_name is None:
             return ""
 
-        sl = class_name.split("\\.")
+        sl = class_name.split(".")
         return sl[len(sl) - 1]
 
     @staticmethod

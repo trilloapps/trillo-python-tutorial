@@ -1,14 +1,29 @@
 from src.collager.pojo.ResultApi import Result
-
 import json
 from datetime import datetime
 from typing import List, Dict, Any
 
 
 class Util:
+    ForwardSlash = "/"
+
+    SNAPSHOT_CLASS = "Snapshot"
+    SHARED_APP_NAME = "shared"
+    COMMON_DS_NAME = "common"
+    KEY_VALUE_CLASS_NAME = "KeyValue"
+    AUDIT_LOG_CLASS_NAME = "AuditLog"
+    AUTH_APP_NAME = "auth"
+    AUTH_DS_NAME = "vault"
+    APP_TO_USER_CLASS = "AppUser"
+    UM_APP_NAME = "UM"
+
+    GCP_SSERVICE_NAME = "gcp"
+
     @staticmethod
     def asJSONPrettyString(obj: Any) -> str:
         try:
+            if isinstance(obj, Result):
+                return json.dumps(vars(obj), indent=4, sort_keys=True)
             return json.dumps(obj, indent=4, sort_keys=True)
         except Exception as exc:
             raise RuntimeError("Failed to stringify object.\n" + str(exc))
@@ -128,3 +143,30 @@ class Util:
             return bool(input_object)
         else:
             return False
+
+    @staticmethod
+    def uidToClassName(uid):
+        if uid is None:
+            return None
+        idx = uid.find(".")
+        if idx > 0:
+            return uid[:idx]
+        return None
+
+    @staticmethod
+    def uidToId(uid):
+        if uid is None:
+            return -1
+        idx = uid.rfind(".")
+        if idx > 0:
+            return int(uid[idx + 1:])
+        return -1
+
+    @staticmethod
+    def uidToIdStr(uid):
+        if uid is None:
+            return None
+        idx = uid.rfind(".")
+        if idx > 0:
+            return uid[idx + 1:]
+        return None
