@@ -2,6 +2,9 @@ from src.collager.pojo.ResultApi import Result
 import json
 from datetime import datetime
 from typing import List, Dict, Any
+from collections import defaultdict
+from decimal import Decimal, ROUND_HALF_UP
+import urllib.parse
 
 
 class Util:
@@ -71,11 +74,8 @@ class Util:
             raise RuntimeError("Failed to save object as JSON.\n" + str(exc))
 
     @staticmethod
-    def fromStringToDate(date_str: str, format: str = "%Y-%m-%d %H:%M:%S") -> datetime:
-        try:
-            return datetime.strptime(date_str, format)
-        except Exception as exc:
-            raise ValueError("Failed to parse date string.\n" + str(exc))
+    def fromStringToDate(date, format="%Y-%m-%d %H:%M:%S"):
+        return datetime.strptime(date, format)
 
     @staticmethod
     def fromDateToString(date: datetime, format: str = "%Y-%m-%d %H:%M:%S") -> str:
@@ -170,3 +170,95 @@ class Util:
         if idx > 0:
             return uid[idx + 1:]
         return None
+
+    @staticmethod
+    def validateJson(json):
+        try:
+            json.loads(json)
+        except json.JSONDecodeError as e:
+            str_msg = str(e)
+            idx1 = str_msg.find("[Source:")
+            idx2 = str_msg.rfind("; line:")
+            if idx1 >= 0 and idx2 > 0 and idx2 > idx1:
+                str_msg = str_msg[:idx1] + str_msg[idx2 + 1:]
+            raise RuntimeError(str_msg)
+
+    @staticmethod
+    def toPrettyJSONString(json_str):
+        if not json_str or not json_str.strip():
+            return json_str
+        try:
+            obj = json.loads(json_str)
+            return json.dumps(obj, indent=4)
+        except Exception as exc:
+            raise RuntimeError("Failed to stringify object.") from exc
+
+    @staticmethod
+    def getCurrentLanguage():
+        return "en"
+
+    @staticmethod
+    def asUid(className, _id=None):
+        if _id is not None:
+            return f"{className}.{_id}"
+        else:
+            return f"{className}."
+
+    @staticmethod
+    def addObjectByPath(map_, path, value):
+        if path.strip():
+            sl = path.split(".")
+            m = map_
+            for i in range(len(sl) - 1):
+                if isinstance(m.get(sl[i]), dict):
+                    m = m[sl[i]]
+                else:
+                    value_map = defaultdict(dict)
+                    value_map_temp = defaultdict(dict)
+                    for j in range(len(sl) - 1, i, -1):
+                        if j == len(sl) - 1:
+                            value_map_temp[sl[j]] = value
+                            continue
+                        value_map[sl[j]] = value_map_temp
+                        value_map_temp = value_map
+                        value_map = defaultdict(dict)
+                    m[sl[i]] = value_map_temp[sl[i]]
+                    break
+
+    @staticmethod
+    def removeLeadingChars(s, c):
+        # here s is string type and c is char type
+        i = 0
+        while i < len(s) and s[i] == c:
+            i += 1
+        return s[i:]
+
+    @staticmethod
+    def removeLastCharIfMatches(s, c):
+        # here s is string type and c is char type
+        i = len(s) - 1
+        while i >= 0 and s[i] == c:
+            i -= 1
+        return s[:i + 1]
+
+    @staticmethod
+    def roundDouble(value: float, places: int) -> float:
+        if places < 0:
+            raise ValueError("Number of decimal places must be non-negative")
+
+        rounded_value = Decimal(str(value)).quantize(Decimal('1e-{0}'.format(places)), rounding=ROUND_HALF_UP)
+        return float(rounded_value)
+
+    @staticmethod
+    def urlEncode(s: str) -> str:
+        try:
+            return urllib.parse.quote(s, safe='')
+        except Exception:
+            return s
+
+    @staticmethod
+    def urlDecode(s: str) -> str:
+        try:
+            return urllib.parse.unquote(s)
+        except Exception:
+            return s
