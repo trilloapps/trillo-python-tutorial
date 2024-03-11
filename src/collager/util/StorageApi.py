@@ -33,14 +33,13 @@ def getBucketName():
 
 @multimethod(str)
 def getSignedUrl(filePath):
-    res = HttpRequestUtil.get(storageBaseEndpoint + "/getSignedUrl?filePath=" + filePath)
+    res = Proxy.remoteCall("StorageApi", "getSignedUrl", filePath)
     return HttpRequestUtil.HttpResponseToString(res)
 
 
 @multimethod(str, str, int, str)
 def getSignedUrl(bucketName, filePath, duration, unit):
-    res = HttpRequestUtil.get(
-        storageBaseEndpoint + "/getSignedUrl?bucketName=" + bucketName + "&filePath=" + filePath + "&duration=" + str(duration) + "&unit=" + unit)
+    res = Proxy.remoteCall("StorageApi", "getSignedUrl", bucketName, filePath, duration, unit)
     return HttpRequestUtil.HttpResponseToString(res)
 
 
@@ -52,8 +51,7 @@ def getSignedUrl(bucketName, filePath):
 
 @multimethod(str, int, str)
 def getSignedUrl(filePath, duration, unit):
-    res = HttpRequestUtil.get(
-        storageBaseEndpoint + "/getSignedUrl?duration=" + str(duration) + "&filePath=" + filePath + "&unit=" + unit)
+    res = Proxy.remoteCall("StorageApi", "getSignedUrl", filePath, duration, unit)
     return HttpRequestUtil.HttpResponseToString(res)
 
 
