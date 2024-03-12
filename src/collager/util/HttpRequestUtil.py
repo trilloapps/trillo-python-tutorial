@@ -56,8 +56,10 @@ class HttpRequestUtil:
                 body_str = json.dumps(body, indent=2)
             elif isinstance(body, list):
                 body_str = json.dumps(body, indent=2)
-            else :
+            elif isinstance(body, Result):
                 body_str = json.dumps(vars(body), indent=2)
+            else:
+                body_str = json.dumps(body, indent=2)
             conn = HTTPSConnection(url.netloc, context=ssl_context)
             conn.request("POST", quote(url.geturl(), safe=':/=?&'), body=body_str, headers=headers)
             response = conn.getresponse()

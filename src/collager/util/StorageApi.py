@@ -1,5 +1,6 @@
 from multimethods import multimethod
 
+from src.collager.util.BaseApi import BaseApi
 from src.collager.util.Util import Util
 from src.collager.util.HttpRequestUtil import HttpRequestUtil
 from src.io.util.Proxy import Proxy
@@ -8,7 +9,7 @@ storageBaseEndpoint = "/api/v1.1/storage"
 
 
 def getFilePath(fileId):
-    res = HttpRequestUtil.get(storageBaseEndpoint + "/" + fileId + "/getFilePath")
+    res = HttpRequestUtil.get(storageBaseEndpoint + "/getFilePath" + "/" + str(fileId))
     return HttpRequestUtil.HttpResponseToString(res)
 
 
@@ -198,23 +199,14 @@ def getFilesPage(bucketName, pathName, versioned, pageToken, pageSize):
     return HttpRequestUtil.post(storageBaseEndpoint + "/getFilesPage", body)
 
 
-@multimethod(str, bytearray, str, str)
+@multimethod(str, bytes, str, str)
 def writeToBucket(bucketName, bytes, targetFilePath, contentType):
-    body = {"bucketName": bucketName,
-            "targetFilePath": targetFilePath,
-            "bytes": str(bytes),
-            "contentType": contentType},
-    res = HttpRequestUtil.post(storageBaseEndpoint + "/writeToBucket", body)
-    return Util.convertToListOfDict(res)
+    return BaseApi.remoteCallAsResult("StorageApi", "writeToBucket", bucketName, bytes, targetFilePath, contentType)
 
 
-@multimethod(bytearray, str, str)
+@multimethod(bytes, str, str)
 def writeToBucket(bytes, targetFilePath, contentType):
-    body = {"targetFilePath": targetFilePath,
-            "bytes": str(bytes),
-            "contentType": contentType},
-    res = HttpRequestUtil.post(storageBaseEndpoint + "/writeToBucket", body)
-    return Util.convertToListOfDict(res)
+    return BaseApi.remoteCallAsResult("StorageApi", "writeToBucket", bytes, targetFilePath, contentType)
 
 
 def saveFileObject(fileObject):

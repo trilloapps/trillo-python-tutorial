@@ -54,7 +54,7 @@ class Util:
     @staticmethod
     def fromJSONString(json_str: str, cls: Any) -> Any:
         try:
-            return json.loads(json_str, cls)
+            return cls(json_str)
         except Exception as exc:
             raise RuntimeError("Failed to make object from string.\n" + str(exc))
 
