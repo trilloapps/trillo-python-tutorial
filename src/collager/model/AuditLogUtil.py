@@ -40,7 +40,7 @@ class AuditLogUtil:
             "action": action[:AuditLogUtil.MAX_ACTION_SIZE],
             "idOfUser": Proxy.getIdOfCurrentUser(),
             "userId": Proxy.getUserId(),
-            "taskExecId": "-1"
+            "taskExecId": "-1",
             "flowExecId": "-1"
         }
         if len(summary) > AuditLogUtil.MAX_SUMMARY_SIZE:
