@@ -261,3 +261,8 @@ def makePublic(bucketName, serviceAccountPropName, filePath):
             "serviceAccountPropName": serviceAccountPropName}
     res = HttpRequestUtil.post(storageBaseEndpoint + "/makePublic", body)
     return Util.convertToResult(res)
+
+
+def deleteFileFromBucket(bucketName, sourceFilePath):
+    return BaseApi.remoteCallAsResult("StorageApi", "deleteFileFromBucket", bucketName, sourceFilePath)
+
