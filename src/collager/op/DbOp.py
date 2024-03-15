@@ -1,5 +1,5 @@
 from src.collager.op.Command import Command
-from src.collager.util.LogApi import Log
+from src.collager.util.LogPy import Log
 
 
 class DbOp:

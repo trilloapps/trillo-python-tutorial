@@ -8,7 +8,7 @@ from src.collager.pojo.ResultApi import Result
 from src.io.util.Proxy import Proxy
 from src.collager.util.Util import *
 from src.collager.util.BaseApi import BaseApi
-from src.collager.util.LogApi import Log
+from src.collager.util.LogPy import Log
 
 
 class RunFunction:

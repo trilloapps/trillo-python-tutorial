@@ -7,7 +7,7 @@ from src.collager.pojo.ResultApi import Result
 from src.collager.util import DSApi
 from src.collager.util.BaseApi import BaseApi
 from src.collager.util.CoreDSUtil import CoreDSUtil
-from src.collager.util.LogApi import Log
+from src.collager.util.LogPy import Log
 from src.collager.util.Util import Util
 
 

@@ -2,7 +2,7 @@ from typing import List, Dict
 
 from src.collager.util import CSVApi
 from src.collager.util.CSVConst import CSVConst
-from src.collager.util.LogApi import Log
+from src.collager.util.LogPy import Log
 
 
 class CSVWriter:

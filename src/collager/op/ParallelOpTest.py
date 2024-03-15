@@ -3,7 +3,7 @@ from datetime import time
 from src.collager.op.ParallelOp import ParallelOp
 from src.collager.pojo.ResultApi import Result
 from src.collager.util.Util import Util
-from src.collager.util.LogApi import Log
+from src.collager.util.LogPy import Log
 
 
 class ParallelOpTest:

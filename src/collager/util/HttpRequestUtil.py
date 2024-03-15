@@ -4,7 +4,7 @@ from http.client import HTTPSConnection
 from urllib.parse import urlparse, quote
 from src.io.util.Proxy import Proxy
 from src.collager.pojo.ResultApi import Result
-from src.collager.util.LogApi import Log
+from src.collager.util.LogPy import Log
 
 
 class HttpRequestUtil:

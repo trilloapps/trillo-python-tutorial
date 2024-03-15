@@ -2,7 +2,7 @@ import base64
 
 from src.collager.pojo.ResultApi import Result
 from src.collager.util import StorageApi
-from src.collager.util.LogApi import Log
+from src.collager.util.LogPy import Log
 
 
 def readFile(parameters):

@@ -1,7 +1,7 @@
 from concurrent.futures import ThreadPoolExecutor
 
 from src.collager.util.Util import Util
-from src.collager.util.LogApi import Log
+from src.collager.util.LogPy import Log
 
 
 class ParallelOp:
