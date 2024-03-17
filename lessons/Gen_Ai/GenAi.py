@@ -1,5 +1,5 @@
 from src.collager.pojo.ResultApi import Result
-from src.collager.util.LogApi import Log
+from src.collager.util import LogApi
 from src.collager.util.GCPGenApi import GCPGenApi
 
 
@@ -14,13 +14,13 @@ def chat(parameters):
     if "messages" not in parameters:
         return Result.getFailedResult("messages is missing")
     # call GCPGenApi to send messages
-    Log.info("Sending request to chat...")
+    LogApi.info("Sending request to chat...")
     res = GCPGenApi.chat(parameters)
     # in case of any error log it
     if res.isFailed():
-        Log.error("There is an error to get response from GCPGenApi Model. Error: " + res.getMessage())
+        LogApi.error("There is an error to get response from GCPGenApi Model. Error: " + res.getMessage())
         return Result.getFailedResult("There is an error to get response from GCPGenApi Model")
-    Log.info("Successfully fetched response")
+    LogApi.info("Successfully fetched response")
     # return the successful response
     responseMessages = {
         "messages": (dict(res.getData())).get("messages")

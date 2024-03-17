@@ -1,8 +1,7 @@
 import base64
 
 from src.collager.pojo.ResultApi import Result
-from src.collager.util import StorageApi
-from src.collager.util.LogPy import Log
+from src.collager.util import StorageApi, LogApi
 
 
 def readFile(parameters):
@@ -14,7 +13,7 @@ def readFile(parameters):
     sourceFilePath = str(parameters['sourceFilePath'])
     res = StorageApi.readFromBucket(bucketName, sourceFilePath)
     if res.isFailed():
-        Log.error("Failed to read the file, error: " + res.getMessage())
+        LogApi.error("Failed to read the file, error: " + res.getMessage())
         return res
     else:
         if isinstance(res.getData(), bytearray):

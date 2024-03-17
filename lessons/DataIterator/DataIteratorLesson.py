@@ -1,9 +1,6 @@
 from typing import Dict, List, Union
 
-from src.collager.util import DSApi
-from src.collager.util.LogApi import Log
-
-
+from src.collager.util import DSApi, LogApi
 
 SQL_QUERY_TEMPLATE =  "SELECT " + "  c.id AS customer_id, " + "  c.firstName AS first_name, " + "  c.lastName AS last_name, " + "  li.id AS line_item_id, " + "  li.description, " + "  li.price " + "FROM " + "  Customer_tbl c " + "JOIN " + "  LineItem_tbl li ON c.id = li.customerId " + "WHERE " +  "  c.id = {{{id}}}"
 
@@ -17,13 +14,13 @@ def iterate(parameters):
     r = dataIterator.initialize()
 
     if r.isFailed():
-        Log.error("Failed to initialize DataIterator: " + r.getMessage())
+        LogApi.error("Failed to initialize DataIterator: " + r.getMessage())
         return r
 
     total_count = dataIterator.getTotalItems()
 
     # print total number of records iterator will iterate through.
-    Log.info(f"Total number of items: {total_count}")
+    LogApi.info(f"Total number of items: {total_count}")
     all_items: List[Dict[str, Union[str, int]]] = []
 
     # iterate through each record.

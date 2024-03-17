@@ -150,7 +150,7 @@ def renameDoc(docId, newName):
         "docId": docId,
         "newName": newName
     }
-    res = HttpRequestUtil.post(docBaseEndpoint + "/docsvc/rename", body)
+    res = HttpRequestUtil.post(docBaseEndpoint + "/rename", body)
     return Util.convertToResult(res)
 
 
@@ -159,7 +159,7 @@ def moveDoc(docId, newParentFolderId):
         "docId": docId,
         "newParentFolderId": newParentFolderId
     }
-    res = HttpRequestUtil.post(docBaseEndpoint + "/docsvc/move", body)
+    res = HttpRequestUtil.post(docBaseEndpoint + "/move", body)
     return Util.convertToResult(res)
 
 
@@ -167,7 +167,7 @@ def deleteDoc(docId):
     body = {
         "docId": docId
     }
-    res = HttpRequestUtil.post(docBaseEndpoint + "/docsvc/delete", body)
+    res = HttpRequestUtil.post(docBaseEndpoint + "/delete", body)
     return Util.convertToResult(res)
 
 
@@ -176,7 +176,7 @@ def deleteManyDocs(ids, permanent):
         "ids": ids,
         "permanent": permanent
     }
-    res = HttpRequestUtil.post(docBaseEndpoint + "/docsvc/deleteMany", body)
+    res = HttpRequestUtil.post(docBaseEndpoint + "/deleteMany", body)
     return Util.convertToResult(res)
 
 
@@ -184,7 +184,7 @@ def restoreManyDocs(ids):
     body = {
         "ids": ids
     }
-    res = HttpRequestUtil.post(docBaseEndpoint + "/docsvc/restoreMany", body)
+    res = HttpRequestUtil.post(docBaseEndpoint + "/restoreMany", body)
     return Util.convertToResult(res)
 
 
@@ -194,7 +194,7 @@ def copyDoc(docId, newParentFolderId, newName):
         "newParentFolderId": newParentFolderId,
         "newName": newName
     }
-    res = HttpRequestUtil.post(docBaseEndpoint + "/docsvc/copy", body)
+    res = HttpRequestUtil.post(docBaseEndpoint + "/copy", body)
     return Util.convertToResult(res)
 
 
@@ -203,7 +203,7 @@ def saveDocObject(params):
 
 
 def updateDocProperties(params):
-    res = HttpRequestUtil.post(docBaseEndpoint + "/docsvc/updateDocProperties", params)
+    res = HttpRequestUtil.post(docBaseEndpoint + "/updateDocProperties", params)
     return Util.convertToResult(res)
 
 
@@ -233,44 +233,44 @@ def saveDocGetSignedUrl(params):
 
 
 def autoComplete(params):
-    return HttpRequestUtil.post(docBaseEndpoint + "/docsvc/autoComplete", params)
+    return HttpRequestUtil.post(docBaseEndpoint + "/autoComplete", params)
 
 
 def search(params):
-    return HttpRequestUtil.post(docBaseEndpoint + "/docsvc/search", params)
+    return HttpRequestUtil.post(docBaseEndpoint + "/search", params)
 
 
 def executeWorkflow(params):
-    return HttpRequestUtil.post(docBaseEndpoint + "/docsvc/executeWorkflow", params)
+    return HttpRequestUtil.post(docBaseEndpoint + "/executeWorkflow", params)
 
 
 def createDocAIDocument(params):
-    return HttpRequestUtil.post(docBaseEndpoint + "/docsvc/createDocAIDocument", params)
+    return HttpRequestUtil.post(docBaseEndpoint + "/createDocAIDocument", params)
 
 
 def summarizeDocs(params):
-    return HttpRequestUtil.post(docBaseEndpoint + "/docsvc/summarizeDocs", params)
+    return HttpRequestUtil.post(docBaseEndpoint + "/summarizeDocs", params)
 
 
 def extractEntities(params):
-    return HttpRequestUtil.post(docBaseEndpoint + "/docsvc/extractEntities", params)
+    return HttpRequestUtil.post(docBaseEndpoint + "/extractEntities", params)
 
 
 def chat(params):
-    return HttpRequestUtil.post(docBaseEndpoint + "/docsvc/chat", params)
+    return HttpRequestUtil.post(docBaseEndpoint + "/chat", params)
 
 
 def generateJson(params):
-    return HttpRequestUtil.post(docBaseEndpoint + "/docsvc/generateJson", params)
+    return HttpRequestUtil.post(docBaseEndpoint + "/generateJson", params)
 
 
 def bulkUpload(params):
-    return HttpRequestUtil.post(docBaseEndpoint + "/docsvc/bulkUpload", params)
+    return HttpRequestUtil.post(docBaseEndpoint + "/bulkUpload", params)
 
 
 def deleteDocAIDocument(docId):
-    return HttpRequestUtil.delete(docBaseEndpoint + "/docsvc/deleteDocAIDocument?docId=" + docId)
+    return HttpRequestUtil.delete(docBaseEndpoint + "/deleteDocAIDocument?docId=" + docId)
 
 
 def deleteDocAISchema(schemaDisplayName):
-    return HttpRequestUtil.delete(docBaseEndpoint + "/docsvc/deleteDocAISchema?schemaDisplayName=" + schemaDisplayName)
+    return HttpRequestUtil.delete(docBaseEndpoint + "/deleteDocAISchema?schemaDisplayName=" + schemaDisplayName)

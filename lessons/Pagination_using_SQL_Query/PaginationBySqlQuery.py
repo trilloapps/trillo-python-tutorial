@@ -2,8 +2,7 @@ from typing import List, Dict, Union
 
 from src.collager.model.DataRequest import DataRequest
 from src.collager.pojo.ResultApi import Result
-from src.collager.util import DSApi
-from src.collager.util.LogApi import Log
+from src.collager.util import DSApi, LogApi
 
 SQL_QUERY_TEMPLATE = '''SELECT 
           c.id AS customer_id, 
@@ -58,10 +57,10 @@ def page(parameters: Dict[str, Union[str, int]]) -> List[Dict[str, Union[str, in
             # returns result if there is failure
             result = r
             if result.isFailed():
-                Log.error("Failed: " + result.getMessage())
+                LogApi.error("Failed: " + result.getMessage())
             else:
-                Log.info("Message: " + result.getMessage())
+                LogApi.info("Message: " + result.getMessage())
             break
 
-    Log.info("Number of items fetched: " + str(len(data_list)))
+    LogApi.info("Number of items fetched: " + str(len(data_list)))
     return data_list

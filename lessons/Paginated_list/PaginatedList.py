@@ -2,8 +2,7 @@ from typing import List, Dict, Union
 
 from src.collager.model.DataRequest import DataRequest
 from src.collager.pojo.ResultApi import Result
-from src.collager.util import DSApi
-from src.collager.util.LogApi import Log
+from src.collager.util import DSApi, LogApi
 from src.collager.model.Exp import Exp
 
 
@@ -45,10 +44,10 @@ def page(parameters: Dict[str, Union[str, int]]) -> Union[List[Dict[str, Union[i
             # returns result if there is a failure
             result = r
             if result.isFailed():
-                Log.error(f"Failed: {result.getMessage()}")
+                LogApi.error(f"Failed: {result.getMessage()}")
             else:
-                Log.info(f"Message: {result.getMessage()}")
+                LogApi.info(f"Message: {result.getMessage()}")
             break
 
-    Log.info(f"Number of items fetched: {len(result_list)}")
+    LogApi.info(f"Number of items fetched: {len(result_list)}")
     return result_list
