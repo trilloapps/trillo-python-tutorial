@@ -1,4 +1,6 @@
 from multimethods import multimethod
+
+from src.collager.util.BaseApi import BaseApi
 from src.collager.util.Util import Util
 from src.collager.util.HttpRequestUtil import HttpRequestUtil
 
@@ -38,8 +40,8 @@ def getDocAISchema(schemaDisplayName):
     return HttpRequestUtil.get(docBaseEndpoint + "/getDocAISchema?schemaDisplayName=" + schemaDisplayName)
 
 
-def getDocAIDocument(docId):
-    return HttpRequestUtil.get(docBaseEndpoint + "/docs?docId=" + docId)
+def getDocFolderList(folderId: int, orderBy : str):
+    return BaseApi.remoteCallAsListOfMaps("DocApi", "getDocFolderList", folderId, orderBy)
 
 
 def getDocAIResult(docId):
