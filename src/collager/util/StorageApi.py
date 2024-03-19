@@ -200,13 +200,20 @@ def getFilesPage(bucketName, pathName, versioned, pageToken, pageSize):
 
 
 @multimethod(str, bytes, str, str)
-def writeToBucket(bucketName, bytes, targetFilePath, contentType):
-    return BaseApi.remoteCallAsResult("StorageApi", "writeToBucket", bucketName, bytes, targetFilePath, contentType)
+def writeToBucket(bucketName, base64Str, targetFilePath, contentType):
+    body = {"bucketName": bucketName,
+            "base64Str": base64Str,
+            "targetFilePath": targetFilePath,
+            "contentType": contentType}
+    return HttpRequestUtil.post(storageBaseEndpoint + "/writeToBucket", body)
 
 
 @multimethod(bytes, str, str)
-def writeToBucket(bytes, targetFilePath, contentType):
-    return BaseApi.remoteCallAsResult("StorageApi", "writeToBucket", bytes, targetFilePath, contentType)
+def writeToBucket(base64Str, targetFilePath, contentType):
+    body = {"base64Str": base64Str,
+            "targetFilePath": targetFilePath,
+            "contentType": contentType}
+    return HttpRequestUtil.post(storageBaseEndpoint + "/writeToBucket", body)
 
 
 def saveFileObject(fileObject):

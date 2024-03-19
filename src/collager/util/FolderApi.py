@@ -1,4 +1,6 @@
 from multimethods import multimethod
+
+from src.collager.util.BaseApi import BaseApi
 from src.collager.util.Util import Util
 from src.collager.util.HttpRequestUtil import HttpRequestUtil
 
@@ -204,12 +206,7 @@ def assignFile(fileId, idOfUserToAssign):
 
 
 def updateStatus(fileId, status):
-    body = {
-        "fileId": fileId,
-        "status": status
-    }
-    res = HttpRequestUtil.post(folderBaseEndpoint + "/file/updateStatus", body)
-    return Util.convertToResult(res)
+    return BaseApi.remoteCallAsResult("FolderApi", "getCreateGroupFolderWithFiles", fileId, status)
 
 
 def saveFileObject(params):
@@ -258,17 +255,12 @@ def startFullSyncTask(providerName):
 
 
 def syncFolder(folderId):
-    body = {
-        "folderId": folderId
-    }
-    return HttpRequestUtil.post(folderBaseEndpoint + "/folder/sync", body)
+    return BaseApi.remoteCallAsResult("FolderApi", "syncFolder", folderId)
 
 
 def getCreateGroupFolderWithFiles(path):
-    body = {
-        "path": path
-    }
-    return HttpRequestUtil.post(folderBaseEndpoint + "/folder/getCreateFolderWithFiles", body)
+    return BaseApi.remoteCall("FolderApi", "getCreateGroupFolderWithFiles", path)
+
 
 
 def retrieveManyUploadSignedUrls(bucket, folderName, subFolder, folderId, fileNames, contentType, duration,
