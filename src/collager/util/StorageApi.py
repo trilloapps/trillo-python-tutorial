@@ -199,7 +199,7 @@ def getFilesPage(bucketName, pathName, versioned, pageToken, pageSize):
     return HttpRequestUtil.post(storageBaseEndpoint + "/getFilesPage", body)
 
 
-@multimethod(str, bytes, str, str)
+@multimethod(str, str, str, str)
 def writeToBucket(bucketName, base64Str, targetFilePath, contentType):
     body = {"bucketName": bucketName,
             "base64Str": base64Str,
@@ -208,7 +208,7 @@ def writeToBucket(bucketName, base64Str, targetFilePath, contentType):
     return HttpRequestUtil.post(storageBaseEndpoint + "/writeToBucket", body)
 
 
-@multimethod(bytes, str, str)
+@multimethod(str, str, str)
 def writeToBucket(base64Str, targetFilePath, contentType):
     body = {"base64Str": base64Str,
             "targetFilePath": targetFilePath,
