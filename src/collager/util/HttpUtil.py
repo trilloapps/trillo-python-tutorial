@@ -26,6 +26,15 @@ def post(url, body, headers):
 def post(url, body):
     return exchangeObjectPost(url, body, None, None)
 
+@multimethod(str, dict)
+def put(url, body):
+    return exchangeObjectPut(url, body, None, None)
+
+
+@multimethod(str, dict, dict)
+def put(url, body, headers):
+    return exchangeObjectPut(url, body, headers, None)
+
 
 @multimethod(str, dict, dict)
 def postJson(url, body, headers):
@@ -46,3 +55,7 @@ def exchangeObjectPostJson(requestUrl, body, headerDict, timeout):
     res = requests.post(requestUrl, json=body, headers=headerDict, timeout=timeout)
     return res
 
+
+def exchangeObjectPut(requestUrl, body, headerDict, timeout):
+    res = requests.put(requestUrl, data=body, headers=headerDict, timeout=timeout)
+    return res
