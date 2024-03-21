@@ -17,6 +17,7 @@ class Result:
         self.data = None
         self.code = 0
         self.logs = None
+        self._rtag = "_r_"
 
     # def __init__(self, status):
     #     self.status = status
