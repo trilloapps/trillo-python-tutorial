@@ -3,6 +3,7 @@ from multimethods import multimethod
 from src.collager.model.DataIterator import DataIterator
 from src.collager.model.DataRequest import DataRequest
 from src.collager.model.DataResult import DataResult
+from src.collager.util.BaseApi import BaseApi
 from src.collager.util.HttpRequestUtil import HttpRequestUtil
 from src.io.util.Proxy import Proxy
 
@@ -110,8 +111,7 @@ def update(className, id, attrName, value):
 
 
 def updateUsingMap(className, id, updateAttrs):
-    return HttpRequestUtil.post(
-        dataBaseEndpoint + "/updateUsingMap/" + className + "/" + id, updateAttrs)
+    return BaseApi.remoteCall("DSApi", "update", className, id, dict(updateAttrs))
 
 
 def updateMany(className, ids, attrName, value):
