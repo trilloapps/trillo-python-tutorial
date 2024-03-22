@@ -4,8 +4,8 @@ class Result:
     SUCCESS = "success"
     FAILED = "failed"
     UNKNOWN = "unknown"
-
     _rtag = "_r_"
+
     LOG = logging.getLogger(__name__)
 
     def __init__(self):
@@ -121,8 +121,7 @@ class Result:
         return self._rtag
 
     def set_rtag(self, _rtag):
-        # immutable, setter to keep JSON parser happy
-        pass
+        self._rtag = _rtag
 
     @staticmethod
     def getInternalError(exc):
@@ -246,6 +245,7 @@ class Result:
             "code": self.code,
             "logs": self.logs or [],
             "_name": self._name,
+            "_rtag": self._rtag
         }
         return result_dict
 
@@ -262,6 +262,7 @@ class Result:
             "code": self.code,
             "logs": self.logs or [],
             "_name": self._name,
+            "_rtag": self._rtag
         }
         return result_dict
 
@@ -272,6 +273,7 @@ class Result:
         result.setMessage(result_dict.get("message"))
         result.setData(result_dict.get("data"))
         result.setCode(result_dict.get("code", 0))
+        result.set_rtag("_r_")
 
         named_messages = result_dict.get("namedMessages", [])
         for named_message in named_messages:
