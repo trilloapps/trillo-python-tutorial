@@ -83,9 +83,7 @@ def queryBySqlStatement(dsName, sqlStatement):
 
 @multimethod(str, str, dict)
 def queryBySqlStatement(dsName, sqlStatement, params):
-    return HttpRequestUtil.get(
-        dataBaseEndpoint + "/queryBySqlStatement?sqlStatement=" + sqlStatement + "&dsName=" + dsName + "&params=" + str(
-            params))
+    return BaseApi.queryBySqlStatement("DSApi", "queryBySqlStatement", dsName, sqlStatement, params)
 
 
 def save(className, entity):
@@ -114,29 +112,18 @@ def updateUsingMap(className, id, updateAttrs):
     return BaseApi.remoteCall("DSApi", "update", className, id, dict(updateAttrs))
 
 
+@multimethod(str, list, str, object)
 def updateMany(className, ids, attrName, value):
-    body = {"ids": ids,
-            "attrName": attrName,
-            "value": value
-            }
-    return HttpRequestUtil.post(
-        dataBaseEndpoint + "/updateMany/" + className, body)
+    return BaseApi.remoteCall("DSApi", "updateMany", className, list(ids), attrName, value)
 
 
-def updateManyUsingMap(className, ids, updateAttrs):
-    body = {"ids": ids,
-            "updateAttrs": updateAttrs
-            }
-    return HttpRequestUtil.post(
-        dataBaseEndpoint + "/updateManyUsingMap/" + className, body)
+@multimethod(str, list, dict)
+def updateMany(className, ids, updateAttrs):
+    return BaseApi.remoteCall("DSApi", "updateMany", className, list(ids), dict(updateAttrs))
 
 
 def updateByQuery(className, whereClause, nameValueMap):
-    body = {"whereClause": whereClause,
-            "nameValueMap": nameValueMap
-            }
-    return HttpRequestUtil.post(
-        dataBaseEndpoint + "/updateUsingMapByQuery/" + className, body)
+    return BaseApi.remoteCall("DSApi", "updateByQuery", className, whereClause, dict(nameValueMap))
 
 
 def deleteSingle(className, id, isPermanent):
@@ -145,14 +132,11 @@ def deleteSingle(className, id, isPermanent):
 
 
 def deleteMany(className, ids, isPermanent):
-    return HttpRequestUtil.post(
-        dataBaseEndpoint + "/deleteMany/" + className + "?permanent=" + str(isPermanent), str(ids))
+    return BaseApi.remoteCall("DSApi", "deleteMany", className, list(ids), isPermanent)
 
 
 def deleteByQuery(className, query, isPermanent):
-    return HttpRequestUtil.post(
-        dataBaseEndpoint + "/deleteByQuery/" + className + "?query=" + str(query) + "&permanent=" + str(isPermanent),
-        {})
+    return BaseApi.remoteCall("DSApi", "deleteByQuery", className, query, isPermanent)
 
 
 def bulkOp(className, opName, entities):
@@ -161,74 +145,38 @@ def bulkOp(className, opName, entities):
 
 
 def executeNamedQuery(queryName, queryParameters, onlyOneRow):
-    return HttpRequestUtil.post(
-        dataBaseEndpoint + "/executeNamedQuery/" + queryName + "?onlyOneRow=" + str(onlyOneRow), queryParameters)
+    return BaseApi.remoteCall("DSApi", "executeNamedQuery", queryName, dict(queryParameters), bool(onlyOneRow))
 
 
-def executePreparedStatement(dataSourceName, sqlStatement, parameters):
-    body = {
-        "sqlStatement": sqlStatement,
-        "parameters": parameters
-    }
-    return HttpRequestUtil.post(
-        dataBaseEndpoint + "/executePreparedStatement/" + dataSourceName, body)
+def executePreparedStatement(dsName, sqlStatement, values):
+    return BaseApi.remoteCall("DSApi", "executePreparedStatement", dsName, sqlStatement, list(values))
 
 
 @multimethod(str, str, dict)
 def executeSqlWriteStatement(dataSourceName, sqlStatement, parameters):
-    body = {
-        "sqlStatement": sqlStatement,
-        "parameters": parameters
-    }
-    return HttpRequestUtil.post(
-        dataBaseEndpoint + "/executeSqlWriteStatement/" + dataSourceName, body)
-
-
-@multimethod(str, str, dict)
-def executeSqlWriteStatement(dataSourceName, sqlStatement, parameters):
-    body = {
-        "sqlStatement": sqlStatement,
-        "parameters": parameters
-    }
-    return HttpRequestUtil.post(
-        dataBaseEndpoint + "/executeSqlWriteStatement/" + dataSourceName, body)
+    return BaseApi.remoteCall("DSApi", "executeSqlWriteStatement", dataSourceName, sqlStatement, parameters)
 
 
 @multimethod(str, str)
 def executeSqlWriteStatement(dataSourceName, sqlStatement):
-    body = {
-        "sqlStatement": sqlStatement
-    }
-    return HttpRequestUtil.post(
-        dataBaseEndpoint + "/executeSqlWriteStatement/" + dataSourceName, body)
+    return BaseApi.remoteCall("DSApi", "executeSqlWriteStatement", dataSourceName, sqlStatement)
 
 
 @multimethod(str, str)
 def executeSql(dataSourceName, sqlStatement):
-    body = {
-        "sqlStatement": sqlStatement
-    }
-    return HttpRequestUtil.post(
-        dataBaseEndpoint + "/executeSql/" + dataSourceName, body)
+    return BaseApi.remoteCall("DSApi", "executeSql", dataSourceName, sqlStatement)
 
 
 @multimethod(str, str, dict)
 def executeSql(dataSourceName, sqlStatement, parameters):
-    body = {
-        "sqlStatement": sqlStatement,
-        "parameters": parameters
-    }
-    return HttpRequestUtil.post(
-        dataBaseEndpoint + "/executeSql/" + dataSourceName, body)
+    return BaseApi.remoteCall("DSApi", "executeSql", dataSourceName, sqlStatement, parameters)
 
 
 def tenantByName(tenantName):
-    return HttpRequestUtil.get(dataBaseEndpoint + "/tenantByName/" + tenantName)
-
+    return BaseApi.remoteCall("DSApi", "tenantByName", tenantName)
 
 def tenantByQuery(tenantQuery):
-    return HttpRequestUtil.get(dataBaseEndpoint + "/tenantByQuery?tenantQuery=" + tenantQuery)
-
+    return BaseApi.remoteCall("DSApi", "tenantByQuery", tenantQuery)
 
 def getUser(id):
     return HttpRequestUtil.get(dataBaseEndpoint + "/user/" + id)
@@ -251,7 +199,7 @@ def valueByKey(key, type):
 
 
 def emptyTable(className):
-    return HttpRequestUtil.get(dataBaseEndpoint + "/emptyTable/" + className)
+    return BaseApi.remoteCall("DSApi", "emptyTable", className)
 
 
 def saveFileOp(fileId, fileName, folderName, op, functionName, status, message):
@@ -300,4 +248,5 @@ def isFileProcessed(fileName, folderName, op):
 
 
 def incrementCounter(className, counterName):
-    return HttpRequestUtil.post(dataBaseEndpoint + "/incrementCounter/" + className + "/" + counterName, {})
+    return BaseApi.remoteCall("DSApi", "incrementCounter", className, counterName)
+

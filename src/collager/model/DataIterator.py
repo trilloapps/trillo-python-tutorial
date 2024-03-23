@@ -216,6 +216,8 @@ class DataIterator:
 
     def retrievePage(self) -> DataResult:
         if self.totalItems == -1:
+            if self.dataRequest is None :
+                self.dataRequest = DataRequest()
             self.dataRequest.setCountQuery(self.countQuery)
         res = DSApi.getPage(vars(self.dataRequest))
         self.dataRequest.setCountQuery(None)

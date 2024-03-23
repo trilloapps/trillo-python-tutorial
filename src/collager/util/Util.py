@@ -172,16 +172,12 @@ class Util:
         return None
 
     @staticmethod
-    def validateJson(json):
+    def validateJson(json_str):
         try:
-            json.loads(json)
-        except json.JSONDecodeError as e:
-            str_msg = str(e)
-            idx1 = str_msg.find("[Source:")
-            idx2 = str_msg.rfind("; line:")
-            if idx1 >= 0 and idx2 > 0 and idx2 > idx1:
-                str_msg = str_msg[:idx1] + str_msg[idx2 + 1:]
-            raise RuntimeError(str_msg)
+            json.loads(json_str)
+            return True
+        except ValueError as e:
+            return False
 
     @staticmethod
     def toPrettyJSONString(json_str):

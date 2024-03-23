@@ -109,7 +109,7 @@ def updateClassVisibility(className, visibility):
 
 def getSchemaForDataStudio(className, includeAllSysAttrs):
     res = HttpRequestUtil.get(
-        metaBaseEndpoint + "/getSchemaForDataStudio?className=" + className + "&includeAllSysAttrs=" + includeAllSysAttrs)
+        metaBaseEndpoint + "/getSchemaForDataStudio?className=" + className + "&includeAllSysAttrs=" + str(includeAllSysAttrs))
     return Util.convertToListOfDict(res)
 
 

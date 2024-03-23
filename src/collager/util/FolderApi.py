@@ -206,7 +206,7 @@ def assignFile(fileId, idOfUserToAssign):
 
 
 def updateStatus(fileId, status):
-    return BaseApi.remoteCallAsResult("FolderApi", "getCreateGroupFolderWithFiles", fileId, status)
+    return BaseApi.remoteCall("FolderApi", "updateStatus", int(fileId), str(status))
 
 
 def saveFileObject(params):
@@ -259,7 +259,7 @@ def syncFolder(folderId):
 
 
 def getCreateGroupFolderWithFiles(path):
-    return BaseApi.remoteCall("FolderApi", "getCreateGroupFolderWithFiles", path)
+    return BaseApi.remoteCall("FolderApi", "getCreateGroupFolderWithFiles", str(path))
 
 
 
