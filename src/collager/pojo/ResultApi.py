@@ -184,8 +184,13 @@ class Result:
         return result
 
     @staticmethod
-    def getSuccessResult():
-        return Result.getSuccessResultWithMsg("Success")
+    def getSuccessResult(msg: str = None, data: object = None):
+        if msg is not None and data is not None:
+            return Result.getSuccessResultWithMsgAndData(msg, data)
+        elif msg is not None:
+            return Result.getSuccessResultWithMsg(msg)
+        else:
+            return Result.getSuccessResultWithMsg("Success")
 
     @staticmethod
     def getSuccessResultWithData(data):

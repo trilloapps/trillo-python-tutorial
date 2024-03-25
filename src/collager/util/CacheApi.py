@@ -1,9 +1,10 @@
+from src.collager.util.BaseApi import BaseApi
 from src.collager.util.HttpRequestUtil import HttpRequestUtil
 cacheBaseEndpoint = "/api/v1.1/cache"
 
 
 def get(cacheName, key):
-    return HttpRequestUtil.get(cacheBaseEndpoint + "/" + cacheName + "/get?key=" + key)
+    return BaseApi.remoteCall("CacheApi", "get", cacheName, key)
 
 def put(cacheName, key, value):
     body = {"key": key,

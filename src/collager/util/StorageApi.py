@@ -63,107 +63,62 @@ def exists(filePath):
 
 @multimethod(str, str)
 def copyFileWithinBucket(sourceFilePath, targetFilePath):
-    body = {"sourceFilePath": sourceFilePath,
-            "targetFilePath": targetFilePath}
-    res = HttpRequestUtil.post(storageBaseEndpoint + "/copyFileWithinBucket", body)
-    return Util.convertToResult(res)
+    return BaseApi.remoteCall("StorageApi", "copyFileWithinBucket", sourceFilePath, targetFilePath)
 
 
 @multimethod(str, str, bool)
 def copyFileWithinBucket(sourceFilePath, targetFilePath, makePublic):
-    body = {"sourceFilePath": sourceFilePath,
-            "targetFilePath": targetFilePath,
-            "makePublic": makePublic}
-    res = HttpRequestUtil.post(storageBaseEndpoint + "/copyFileWithinBucket", body)
-    return Util.convertToResult(res)
+    return BaseApi.remoteCall("StorageApi", "copyFileWithinBucket", sourceFilePath, targetFilePath, makePublic)
 
 
 @multimethod(str, str, str)
 def copyFileWithinBucket(bucketName, sourceFilePath, targetFilePath):
-    body = {"sourceFilePath": sourceFilePath,
-            "targetFilePath": targetFilePath,
-            "bucketName": bucketName}
-    res = HttpRequestUtil.post(storageBaseEndpoint + "/copyFileWithinBucket", body)
-    return Util.convertToResult(res)
+    return BaseApi.remoteCall("StorageApi", "copyFileWithinBucket", bucketName, sourceFilePath, targetFilePath)
 
 
 @multimethod(str, str, str, bool)
 def copyFileWithinBucket(bucketName, sourceFilePath, targetFilePath, makePublic):
-    body = {"sourceFilePath": sourceFilePath,
-            "targetFilePath": targetFilePath,
-            "bucketName": bucketName,
-            "makePublic": makePublic}
-    res = HttpRequestUtil.post(storageBaseEndpoint + "/copyFileWithinBucket", body)
-    return Util.convertToResult(res)
+    return BaseApi.remoteCall("StorageApi", "copyFileWithinBucket", bucketName, sourceFilePath, targetFilePath, makePublic)
 
 
 @multimethod(str, str)
 def copyFileToBucket(sourceFilePath, targetFilePath):
-    body = {"sourceFilePath": sourceFilePath,
-            "targetFilePath": targetFilePath}
-    res = HttpRequestUtil.post(storageBaseEndpoint + "/copyFileToBucket", body)
-    return Util.convertToResult(res)
+    return BaseApi.remoteCall("StorageApi", "copyFileToBucket", sourceFilePath, targetFilePath)
 
 
 @multimethod(str, str, str)
 def copyFileToBucket(bucketName, sourceFilePath, targetFilePath):
-    body = {"sourceFilePath": sourceFilePath,
-            "targetFilePath": targetFilePath,
-            "bucketName": bucketName}
-    res = HttpRequestUtil.post(storageBaseEndpoint + "/copyFileToBucket", body)
-    return Util.convertToResult(res)
+    return BaseApi.remoteCall("StorageApi", "copyFileToBucket", bucketName, sourceFilePath, targetFilePath)
 
 
 @multimethod(str, str, str, str)
 def copyFileToBucket(bucketName, serviceAccountPropName, sourceFilePath, targetFilePath):
-    body = {"sourceFilePath": sourceFilePath,
-            "targetFilePath": targetFilePath,
-            "bucketName": bucketName,
-            "serviceAccountPropName": serviceAccountPropName}
-    res = HttpRequestUtil.post(storageBaseEndpoint + "/copyFileToBucket", body)
-    return Util.convertToResult(res)
+    return BaseApi.remoteCall("StorageApi", "copyFileToBucket", bucketName, serviceAccountPropName, sourceFilePath, targetFilePath)
 
 
 @multimethod(str, str)
 def copyFileFromBucket(sourceFilePath, targetFilePath):
-    body = {"sourceFilePath": sourceFilePath,
-            "targetFilePath": targetFilePath}
-    res = HttpRequestUtil.post(storageBaseEndpoint + "/copyFileFromBucket", body)
-    return Util.convertToResult(res)
+    return BaseApi.remoteCall("StorageApi", "copyFileFromBucket", sourceFilePath, targetFilePath)
 
 
 @multimethod(str, str, str)
 def copyFileFromBucket(bucketName, sourceFilePath, targetFilePath):
-    body = {"sourceFilePath": sourceFilePath,
-            "targetFilePath": targetFilePath,
-            "bucketName": bucketName}
-    res = HttpRequestUtil.post(storageBaseEndpoint + "/copyFileFromBucket", body)
-    return Util.convertToResult(res)
+    return BaseApi.remoteCall("StorageApi", "copyFileFromBucket", bucketName, sourceFilePath, targetFilePath)
 
 
 @multimethod(str, str, str, str)
 def copyFileFromBucket(bucketName, serviceAccountPropName, sourceFilePath, targetFilePath):
-    body = {"sourceFilePath": sourceFilePath,
-            "targetFilePath": targetFilePath,
-            "bucketName": bucketName,
-            "serviceAccountPropName": serviceAccountPropName}
-    res = HttpRequestUtil.post(storageBaseEndpoint + "/copyFileFromBucket", body)
-    return Util.convertToResult(res)
+    return BaseApi.remoteCall("StorageApi", "copyFileFromBucket", bucketName, serviceAccountPropName, sourceFilePath, targetFilePath)
 
 
 @multimethod(str)
 def readFromBucket(sourceFilePath):
-    body = {"sourceFilePath": sourceFilePath}
-    res = HttpRequestUtil.post(storageBaseEndpoint + "/readFromBucket", body)
-    return Util.convertToResult(res)
+    return BaseApi.remoteCall("StorageApi", "readFromBucket", sourceFilePath)
 
 
 @multimethod(str, str)
 def readFromBucket(bucketName, sourceFilePath):
-    body = {"sourceFilePath": sourceFilePath,
-            "bucketName": bucketName}
-    res = HttpRequestUtil.post(storageBaseEndpoint + "/readFromBucket", body)
-    return Util.convertToResult(res)
+    return BaseApi.remoteCall("StorageApi", "readFromBucket", bucketName, sourceFilePath)
 
 
 @multimethod(str, bool)

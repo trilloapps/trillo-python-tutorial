@@ -1,4 +1,6 @@
 from multimethods import multimethod
+
+from src.collager.util.BaseApi import BaseApi
 from src.collager.util.Util import Util
 from src.collager.util.HttpRequestUtil import HttpRequestUtil
 
@@ -7,49 +9,21 @@ bqBaseEndpoint = "/api/v1.1/bq"
 
 @multimethod(str, str, str)
 def createTable(datasetName, tableName, schema):
-    body = {
-        "datasetName": datasetName,
-        "tableName": tableName,
-        "schema": schema
-    }
-    res = HttpRequestUtil.post(bqBaseEndpoint + "/createTable", body)
-    return Util.convertToResult(res)
-
+    return BaseApi.remoteCallAsResult("BigQueryApi", "createTable", datasetName, tableName, schema)
 
 @multimethod(str, str, str, str)
 def createTable(datasetName, tableName, bucketName, bucketFileName):
-    body = {
-        "datasetName": datasetName,
-        "tableName": tableName,
-        "bucketName": bucketName,
-        "bucketFileName": bucketFileName
-    }
-    res = HttpRequestUtil.post(bqBaseEndpoint + "/createTable", body)
-    return Util.convertToResult(res)
+    return BaseApi.remoteCallAsResult("BigQueryApi", "createTable", datasetName, tableName, bucketName, bucketFileName)
 
 
 @multimethod(str, str, list)
 def createTable(datasetName, tableName, classAttrs):
-    body = {
-        "datasetName": datasetName,
-        "tableName": tableName,
-        "classAttrs": classAttrs
-    }
-    res = HttpRequestUtil.post(bqBaseEndpoint + "/createTable", body)
-    return Util.convertToResult(res)
+    return BaseApi.remoteCallAsResult("BigQueryApi", "createTable", datasetName, tableName, classAttrs)
 
 
 @multimethod(str, str, list, list, list)
 def createTable(datasetName, tableName, csvSchema, classAttrs, mappings):
-    body = {
-        "datasetName": datasetName,
-        "tableName": tableName,
-        "csvSchema": csvSchema,
-        "classAttrs": classAttrs,
-        "mappings": mappings
-    }
-    res = HttpRequestUtil.post(bqBaseEndpoint + "/createTable", body)
-    return Util.convertToResult(res)
+    return BaseApi.remoteCallAsResult("BigQueryApi", "createTable", datasetName, tableName, csvSchema, classAttrs, mappings)
 
 
 def getBQDataSets():
@@ -171,7 +145,7 @@ def exportTable(datasetName, tableName, destinationUri, dataFormat):
     body = {
         "datasetName": datasetName,
         "tableName": tableName,
-        "destinationUr": destinationUri,
+        "destinationUri": destinationUri,
         "dataFormat": dataFormat
 
     }
