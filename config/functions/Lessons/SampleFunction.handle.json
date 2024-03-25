@@ -1,0 +1,7 @@
+{
+  "functionName": "SampleFunction",
+  "methodName": "handle",
+  "parameters": {
+    "message": "Hello World"
+  }
+}
