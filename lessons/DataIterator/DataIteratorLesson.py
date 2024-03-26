@@ -4,7 +4,10 @@ from src.collager.util import DSApi, LogApi
 
 SQL_QUERY_TEMPLATE =  "SELECT " + "  c.id AS customer_id, " + "  c.firstName AS first_name, " + "  c.lastName AS last_name, " + "  li.id AS line_item_id, " + "  li.description, " + "  li.price " + "FROM " + "  Customer_tbl c " + "JOIN " + "  LineItem_tbl li ON c.id = li.customerId " + "WHERE " +  "  c.id = {{{id}}}"
 
+from src.collager.util.api import Api
 
+
+@Api(httpMethod="post")
 def iterate(parameters):
     # instantiate a data iterator using SQL template.
     dataIterator = DSApi.getDataIterator(1, 3, SQL_QUERY_TEMPLATE)

@@ -1,15 +1,17 @@
 from src.collager.pojo.ResultApi import Result
 from src.collager.util import LogApi
 from src.collager.util.GCPGenApi import GCPGenApi
+from src.collager.util.api import Api
 
 
+@Api(httpMethod="post")
 def summarizeText(parameters):
     if "text" not in parameters:
         return Result.getFailedResult("text is missing")
     text = parameters["text"]
     return GCPGenApi.summarizeText(text)
 
-
+@Api(httpMethod="post")
 def chat(parameters):
     if "messages" not in parameters:
         return Result.getFailedResult("messages is missing")

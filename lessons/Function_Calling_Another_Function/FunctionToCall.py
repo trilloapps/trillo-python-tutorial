@@ -1,7 +1,10 @@
 from src.collager.pojo.ResultApi import Result
 from src.collager.util import DSApi
 
+from src.collager.util.api import Api
 
+
+@Api(httpMethod="post")
 def queryRecordsFromDSById(parameters):
     if "id" not in parameters:
         return Result.getFailedResult("id is missing")

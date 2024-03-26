@@ -1,6 +1,6 @@
 {
   "functionName": "SampleFunction",
-  "methodName": "handle",
+  "methodName": "postMethodChangeMe",
   "parameters": {
     "message": "Hello World"
   }

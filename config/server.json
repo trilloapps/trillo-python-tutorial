@@ -2,6 +2,6 @@
    "serverUrl":"<your workbench url>",
    "userId":"Defined as environment variable TRILLO_WB_USER_ID.",
    "password":"Defined as environment variable TRILLO_WB_USER_PASSWORD",
-   
-   "functionDetailsFile" : "functions/ReadFileFromCloudStorageBucket.readFile.json"
+
+   "functionDetailsFile" : "functions/Lessons/SampleFunction.postMethodChangeMe.json"
 }

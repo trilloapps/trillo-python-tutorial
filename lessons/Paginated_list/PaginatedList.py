@@ -1,11 +1,11 @@
 from typing import List, Dict, Union
-
 from src.collager.model.DataRequest import DataRequest
 from src.collager.pojo.ResultApi import Result
 from src.collager.util import DSApi, LogApi
 from src.collager.model.Exp import Exp
+from src.collager.util.api import Api
 
-
+@Api(httpMethod="post")
 def page(parameters: Dict[str, Union[str, int]]) -> Union[List[Dict[str, Union[int, List[Dict[str, Union[str, int]]]]]], None]:
     dsr = DataRequest()
     # fetch records of class customers

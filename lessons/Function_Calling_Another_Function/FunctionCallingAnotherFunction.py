@@ -1,7 +1,10 @@
 from uuid import UUID
 from src.collager.util import FuncApi, LogApi
 
+from src.collager.util.api import Api
 
+
+@Api(httpMethod="post")
 def saveAndQueryRecordInDS(parameters):
     resForQuery = FuncApi.executeFunctionWithMethod("FunctionToCall", "queryRecordsFromDSById", parameters)
     if resForQuery.isSuccess():
