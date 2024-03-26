@@ -45,7 +45,7 @@ The following sections describe concepts and steps to start developing Trillo fu
 
 - Python IDE should be available on your machine. It should be using Python 3.
 - You should have cloned this repository.
-- The repository should be imported as a new Maven project. (Make sure you don’t import it as a project or directory).
+- The repository should be imported as a new Python project. (Make sure you don’t import it as a project or directory).
 - You should have access to a Trillo Workbench running on cloud (URL, login credentials to its UI).
 - You can use the same credentials to access Trillo Workbench from your client.
 
