@@ -51,3 +51,7 @@ class GCPGenApi:
     @staticmethod
     def extractEntitiesFromText(prompt: str, text: str) -> 'Result':
         return BaseApi.remoteCallAsResult("GCPGenApi", "extractEntitiesFromText", prompt, text)
+
+    @staticmethod
+    def vertexAiGetAnswer(question: str, datastoreId: str) -> 'Object':
+        return BaseApi.remoteCall("GCPGenApi", "vertexAiGetAnswer", question, datastoreId)
