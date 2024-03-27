@@ -105,6 +105,20 @@ def createTaskBySourceUid(taskName, taskType, sourceUid, appName, functionName, 
     res = HttpRequestUtil.post(functionBaseEndpoint + "/createTaskBySourceUid/" + functionName, body)
     return Util.convertToResult(res)
 
+@multimethod(str, str, str, str, str, str, dict)
+def createTaskBySourceUid(taskName, taskType, sourceUid, appName, functionName, methodName, params):
+    body = {
+        "taskName": taskName,
+        "taskType": taskType,
+        "sourceUid": sourceUid,
+        "appName": appName,
+        "methodName": methodName,
+        "params": params
+    }
+
+    res = HttpRequestUtil.post(functionBaseEndpoint + "/createTaskBySourceUid/" + functionName, body)
+    return Util.convertToResult(res)
+
 
 @multimethod(str, str)
 def executeSSH(hostName, command):
