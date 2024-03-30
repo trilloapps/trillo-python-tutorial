@@ -209,7 +209,7 @@ def logToConsole(type, msg):
     elif type == "error":
         log(logging.ERROR, msg)
     elif type == "critical":
-        log(logging.CRITICAL, msg)
+        log(logging.ERROR, msg)
 
 
 def log(level, msg):

@@ -263,10 +263,10 @@ def getCreateGroupFolderWithFiles(path):
 
 
 
-def retrieveManyUploadSignedUrls(bucket, folderName, subFolder, folderId, fileNames, contentType, duration,
-                                 functionName, functionParams):
+def retrieveManyUploadSignedUrls(bucketName, folderName, subFolder, folderId, fileNames, contentType,  duration,
+      functionName, functionParams):
     body = {
-        "bucket": bucket,
+        "bucket": bucketName,
         "folderName": folderName,
         "subFolder": subFolder,
         "folderId": folderId,
@@ -281,19 +281,20 @@ def retrieveManyUploadSignedUrls(bucket, folderName, subFolder, folderId, fileNa
     return Util.convertToResult(res)
 
 
-@multimethod(str, str, str, str, str, str, bool, int)
-def retrieveSignedUrl(id, folderName, subFolder, folderId, fileName, contentType, asAttachment,
-                      duration):
+@multimethod(str, str, str, str, str, str, str, str, bool, int, bool)
+def retrieveSignedUrl(fileId, bucketName, folderName, subFolder,
+       folderId, fileName, contentType,  method, asAttachment, duration, publicShare):
     body = {
-        "id": id,
+        "fileId": fileId,
+        "bucketName": bucketName,
         "folderName": folderName,
         "subFolder": subFolder,
         "folderId": folderId,
         "fileName": fileName,
         "contentType": contentType,
+        "method": method,
         "asAttachment": asAttachment,
-        "duration": duration
-
+        "duration": duration,
+        "publicShare": publicShare
     }
-    res = HttpRequestUtil.post(folderBaseEndpoint + "/folder/retrieveSignedUrl", body)
-    return Util.convertToResult(res)
+    return HttpRequestUtil.post(folderBaseEndpoint + "/folder/retrieveSignedUrl", body)

@@ -55,3 +55,7 @@ class GCPGenApi:
     @staticmethod
     def vertexAiGetAnswer(question: str, datastoreId: str) -> 'Object':
         return BaseApi.remoteCall("GCPGenApi", "vertexAiGetAnswer", question, datastoreId)
+
+    @staticmethod
+    def vertexAiGetAnswer(question: str, datastoreId: str, pageSize: int, modelVersion: str) -> 'Object':
+        return BaseApi.remoteCall("GCPGenApi", "vertexAiGetAnswer", question, datastoreId, pageSize, modelVersion)

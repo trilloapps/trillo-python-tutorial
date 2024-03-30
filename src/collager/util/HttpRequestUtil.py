@@ -107,17 +107,23 @@ class HttpRequestUtil:
 
     @staticmethod
     def HttpResponseToString(res):
-        if isinstance(res, str):
-            return res
-        if res is not None:
-            return json.dumps(res, indent=2)
-        return None
+        try:
+            if isinstance(res, str):
+                return res
+            if res is not None:
+                return json.dumps(res, indent=2)
+            return None
+        except Exception as e:
+            return None
 
     @staticmethod
     def HttpResponseToBoolean(res):
-        if isinstance(res, bool):
-            return res
-        return False
+        try:
+            if isinstance(res, bool):
+                return res
+            return False
+        except Exception as e:
+            return False
 
     @staticmethod
     def getHttpClient():

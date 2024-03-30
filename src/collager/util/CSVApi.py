@@ -78,15 +78,15 @@ def csvWriteFile(fileName, separator, columnNames, columnNameLine, rows):
 
 @multimethod(str, list)
 def getCSVWriter(fileName, columnNames):
-    return BaseApi.remoteCall("CSVApi", "getCSVWriter", str(fileName), list(columnNames))
+    return HttpRequestUtil.get(csvBaseEndpoint + "/getCSVWriter?fileName=" + str(fileName) + "&columnNames=" + str(columnNames))
 
 
 @multimethod(str, str, list)
 def getCSVWriter(fileName, separatorChar, columnNames):
-    return BaseApi.remoteCall("CSVApi", "getCSVWriter", fileName, separatorChar, list(columnNames))
+    return HttpRequestUtil.get(csvBaseEndpoint + "/getCSVWriter?fileName=" + str(fileName) + "&separatorChar=" + str(separatorChar) + "&columnNames=" + str(columnNames))
 
 
 @multimethod(str, str, list, int)
 def getCSVWriter(fileName, separatorChar, columnNames, columnNameLine):
-    return BaseApi.remoteCall("CSVApi", "getCSVWriter", fileName, separatorChar, list(columnNames), int(columnNameLine))
+    return HttpRequestUtil.get(csvBaseEndpoint + "/getCSVWriter?fileName=" + str(fileName) + "&separatorChar=" + str(separatorChar) + "&columnNames=" + str(columnNames) + "&columnNameLine=" + str(columnNameLine))
 

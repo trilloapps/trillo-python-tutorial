@@ -238,20 +238,8 @@ def autoComplete(params):
     return HttpRequestUtil.post(docBaseEndpoint + "/autoComplete", params)
 
 
-def search(params):
-    return HttpRequestUtil.post(docBaseEndpoint + "/search", params)
-
-
 def executeWorkflow(params):
     return HttpRequestUtil.post(docBaseEndpoint + "/executeWorkflow", params)
-
-
-def createDocAIDocument(params):
-    return HttpRequestUtil.post(docBaseEndpoint + "/createDocAIDocument", params)
-
-
-def summarizeDocs(params):
-    return HttpRequestUtil.post(docBaseEndpoint + "/summarizeDocs", params)
 
 
 def extractEntities(params):
@@ -270,9 +258,5 @@ def bulkUpload(params):
     return HttpRequestUtil.post(docBaseEndpoint + "/bulkUpload", params)
 
 
-def deleteDocAIDocument(docId):
-    return HttpRequestUtil.delete(docBaseEndpoint + "/deleteDocAIDocument?docId=" + docId)
-
-
 def deleteDocAISchema(schemaDisplayName):
-    return HttpRequestUtil.delete(docBaseEndpoint + "/deleteDocAISchema?schemaDisplayName=" + schemaDisplayName)
+    return BaseApi.remoteCall("DocApi", "deleteDocAISchema", schemaDisplayName)
