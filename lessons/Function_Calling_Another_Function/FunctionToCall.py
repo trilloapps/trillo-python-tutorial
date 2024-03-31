@@ -15,7 +15,7 @@ def queryRecordsFromDSById(parameters):
     tableName = parameters["tableName"]
     return DSApi.get("shared.common." + tableName, id)
 
-
+@Api(httpMethod="post")
 def saveManyRecordsInDs(parameters):
     if "records" not in parameters:
         return Result.getFailedResult("records is missing")
