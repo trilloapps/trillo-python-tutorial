@@ -7,8 +7,8 @@ class DLPApi:
         return BaseApi.remoteCallAsResult("DLPApi", "inspect", text, informationTypes)
 
     @staticmethod
-    def redactImage(byteImage, imageType, informationType):
-        return BaseApi.remoteCallAsResult("DLPApi", "redactImage", byteImage, imageType, informationType)
+    def redactImage(base64String, imageType, informationType):
+        return BaseApi.remoteCallAsResult("DLPApi", "redactImage", base64String, imageType, informationType)
 
     @staticmethod
     def redactPII(text):
