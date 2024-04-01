@@ -1,5 +1,6 @@
 from src.collager.util.BaseApi import BaseApi
-
+from src.collager.util.HttpRequestUtil import HttpRequestUtil
+dlpBaseEndpoint = "/api/v1.1/dlp"
 
 class DLPApi:
     @staticmethod
@@ -8,7 +9,10 @@ class DLPApi:
 
     @staticmethod
     def redactImage(base64String, imageType, informationType):
-        return BaseApi.remoteCallAsResult("DLPApi", "redactImage", base64String, imageType, informationType)
+        body = {"base64String": base64String,
+                "imageType": imageType,
+                "informationType": informationType}
+        return HttpRequestUtil.post(dlpBaseEndpoint + "/redactImage", body)
 
     @staticmethod
     def redactPII(text):
