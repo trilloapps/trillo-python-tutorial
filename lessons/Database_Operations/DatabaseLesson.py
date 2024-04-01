@@ -4,7 +4,7 @@ from src.collager.util import DSApi
 from src.collager.util.api import Api
 
 
-@Api(httpMethod="post")
+@Api(httpMethod="get")
 def queryRecordsFromDSById(parameters):
     if "id" not in parameters:
         return Result.getFailedResult("id is missing")
