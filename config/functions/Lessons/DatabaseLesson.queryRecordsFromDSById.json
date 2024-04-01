@@ -1,0 +1,8 @@
+{
+  "functionName": "DatabaseLesson",
+  "methodName": "queryRecordsFromDSById",
+  "parameters": {
+    "tableName": "Customer",
+    "id": "2"
+  }
+}
