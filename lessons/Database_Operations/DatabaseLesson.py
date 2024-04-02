@@ -15,6 +15,7 @@ def queryRecordsFromDSById(parameters):
     tableName = parameters["tableName"]
     return DSApi.get("shared.common." + tableName, id)
 
+
 @Api(httpMethod="post")
 def saveManyRecordsInDs(parameters):
     if "records" not in parameters:
@@ -23,3 +24,18 @@ def saveManyRecordsInDs(parameters):
     records = list(parameters["records"])
     tableName = parameters["tableName"]
     return DSApi.saveManyIgnoreError("shared.common." + tableName, records)
+
+
+@Api(httpMethod="post")
+def updateRecordInDs(parameters):
+    if "updateAttributes" not in parameters:
+        return Result.getFailedResult("updateAttributes is missing")
+    if "id" not in parameters:
+        return Result.getFailedResult("id is missing")
+    if "tableName" not in parameters:
+        return Result.getFailedResult("tableName is missing")
+
+    updateAttributes = dict(parameters["updateAttributes"])
+    tableName = parameters["tableName"]
+    id = str(parameters["id"])
+    return DSApi.updateUsingMap("shared.common." + tableName, id, updateAttributes)

@@ -1,0 +1,12 @@
+{
+  "functionName": "DatabaseLesson",
+  "methodName": "updateRecordInDs",
+  "parameters": {
+    "tableName": "Customer",
+    "id" : "1",
+    "updateAttributes": {
+      "email": "john.doe@example.com",
+      "phone": "+1234567890"
+    }
+  }
+}

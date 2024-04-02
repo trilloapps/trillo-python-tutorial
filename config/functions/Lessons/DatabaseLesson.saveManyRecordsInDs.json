@@ -3,7 +3,6 @@
   "methodName": "saveManyRecordsInDs",
   "parameters": {
     "tableName": "Customer",
-    "id": "1",
     "records": [
       {
         "firstName": "John",
