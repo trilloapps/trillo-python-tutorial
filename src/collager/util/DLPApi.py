@@ -14,6 +14,13 @@ class DLPApi:
                 "informationType": informationType}
         return HttpRequestUtil.post(dlpBaseEndpoint + "/redactImage", body)
 
+
+    @staticmethod
+    def redactImageAllText(base64String, imageType):
+        body = {"base64String": base64String,
+                "imageType": imageType}
+        return HttpRequestUtil.post(dlpBaseEndpoint + "/redactImageAllText", body)
+
     @staticmethod
     def redactPII(text):
         return BaseApi.remoteCallAsResult("DLPApi", "redactPII", text)
