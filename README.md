@@ -48,6 +48,7 @@ The following sections describe concepts and steps to start developing Trillo fu
 - The repository should be imported as a new Python project. (Make sure you don’t import it as a project or directory).
 - You should have access to a Trillo Workbench running on cloud (URL, login credentials to its UI).
 - You can use the same credentials to access Trillo Workbench from your client.
+- Follow steps to setup IDE for Trillo Workbench development as described in this link - [Trillo Function Development - Python](https://docs.google.com/presentation/d/1-yPnVH9zhtzfU48e4krCiMo6tbtPm2SuN_B_l1DT5mA/edit#slide=id.g2bb86854168_0_15)
 
 ## How do Trillo functions run inside an IDE
 - Trillo functions can run inside an IDE through an executor program,(src/io/RunFunction.py, provided in the repo).
@@ -130,3 +131,4 @@ def postMethodChangeMe(parameters):
 
 ## References
 - https://trillo.gitbook.io/trillo-workbench
+- [Python IDE Setup](https://docs.google.com/presentation/d/1-yPnVH9zhtzfU48e4krCiMo6tbtPm2SuN_B_l1DT5mA/edit#slide=id.g2bb86854168_0_15)
