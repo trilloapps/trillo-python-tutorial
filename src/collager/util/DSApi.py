@@ -83,7 +83,7 @@ def queryBySqlStatement(dsName, sqlStatement):
 
 @multimethod(str, str, dict)
 def queryBySqlStatement(dsName, sqlStatement, params):
-    return BaseApi.queryBySqlStatement("DSApi", "queryBySqlStatement", dsName, sqlStatement, params)
+    return BaseApi.remoteCall("DSApi", "queryBySqlStatement", dsName, sqlStatement, params)
 
 
 def save(className, entity):
