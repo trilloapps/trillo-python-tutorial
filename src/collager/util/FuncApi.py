@@ -37,21 +37,25 @@ def executeFunction(appName, functionName, methodName, params, preAuthCall):
     return Util.convertToResult(res)
 
 
-@multimethod(str, str, dict)
-def executeFunctionWithMethod(functionName, methodName, params):
-    return Proxy.remoteCall("CoreFuncApi", "executeFunctionWithMethod", functionName, methodName, params)
-
 @multimethod(str, str, str, dict)
 def executeFunctionWithMethod(appName, functionName, methodName, params):
-    # body = {
-    #     "appName": appName,
-    #     "methodName": methodName,
-    #     "params": params
-    # }
-    # res = HttpRequestUtil.post(functionBaseEndpoint + "/executeFunctionWithMethod/" + functionName, body)
-    # return Util.convertToResult(res)
-    return Proxy.remoteCall("CoreFuncApi", "executeFunctionWithMethod",
-      functionName, methodName, params)
+    body = {
+        "appName": appName,
+        "methodName": methodName,
+        "params": params
+    }
+    res = HttpRequestUtil.post(functionBaseEndpoint + "/executeFunctionWithMethod/" + functionName, body)
+    return Util.convertToResult(res)
+
+
+@multimethod(str, str, dict)
+def executeFunctionWithMethod(functionName, methodName, params):
+    body = {
+        "methodName": methodName,
+        "params": params
+    }
+    res = HttpRequestUtil.post(functionBaseEndpoint + "/executeFunctionWithMethod/" + functionName, body)
+    return Util.convertToResult(res)
 
 
 @multimethod(str, str, str, dict)
@@ -76,6 +80,62 @@ def createTask(taskName, taskType, appName, functionName, params):
     }
 
     res = HttpRequestUtil.post(functionBaseEndpoint + "/createTask/" + functionName, body)
+    return Util.convertToResult(res)
+
+
+@multimethod(str, str, str, str, str, dict)
+def createTask2(taskName, taskType, appName, functionName, methodName, params):
+    body = {
+        "taskName": taskName,
+        "taskType": taskType,
+        "appName": appName,
+        "methodName": methodName,
+        "params": params
+    }
+
+    res = HttpRequestUtil.post(functionBaseEndpoint + "/createTask2/" + functionName, body)
+    return Util.convertToResult(res)
+
+
+@multimethod(str, str, str, str, dict)
+def createTask2(taskName, taskType, functionName, methodName, params):
+    body = {
+        "taskName": taskName,
+        "taskType": taskType,
+        "methodName": methodName,
+        "params": params
+    }
+
+    res = HttpRequestUtil.post(functionBaseEndpoint + "/createTask2/" + functionName, body)
+    return Util.convertToResult(res)
+
+
+@multimethod(str, str, str, str, bool, dict)
+def createTask2(taskName, taskType, functionName, methodName, inbuilt, params):
+    body = {
+        "taskName": taskName,
+        "taskType": taskType,
+        "methodName": methodName,
+        "inbuilt": inbuilt,
+        "params": params
+    }
+
+    res = HttpRequestUtil.post(functionBaseEndpoint + "/createTask2/" + functionName, body)
+    return Util.convertToResult(res)
+
+
+@multimethod(str, str, str, str, str, bool, dict)
+def createTask2(taskName, taskType, appName, functionName, methodName, inbuilt, params):
+    body = {
+        "taskName": taskName,
+        "taskType": taskType,
+        "appName": appName,
+        "methodName": methodName,
+        "inbuilt": inbuilt,
+        "params": params
+    }
+
+    res = HttpRequestUtil.post(functionBaseEndpoint + "/createTask2/" + functionName, body)
     return Util.convertToResult(res)
 
 
@@ -105,8 +165,9 @@ def createTaskBySourceUid(taskName, taskType, sourceUid, appName, functionName, 
     res = HttpRequestUtil.post(functionBaseEndpoint + "/createTaskBySourceUid/" + functionName, body)
     return Util.convertToResult(res)
 
+
 @multimethod(str, str, str, str, str, str, dict)
-def createTaskBySourceUid(taskName, taskType, sourceUid, appName, functionName, methodName, params):
+def createTaskBySourceUid2(taskName, taskType, sourceUid, appName, functionName, methodName, params):
     body = {
         "taskName": taskName,
         "taskType": taskType,
@@ -116,7 +177,52 @@ def createTaskBySourceUid(taskName, taskType, sourceUid, appName, functionName, 
         "params": params
     }
 
-    res = HttpRequestUtil.post(functionBaseEndpoint + "/createTaskBySourceUid/" + functionName, body)
+    res = HttpRequestUtil.post(functionBaseEndpoint + "/createTaskBySourceUid2/" + functionName, body)
+    return Util.convertToResult(res)
+
+
+@multimethod(str, str, str, str, str, dict)
+def createTaskBySourceUid2(taskName, taskType, sourceUid, functionName, methodName, params):
+    body = {
+        "taskName": taskName,
+        "taskType": taskType,
+        "sourceUid": sourceUid,
+        "methodName": methodName,
+        "params": params
+    }
+
+    res = HttpRequestUtil.post(functionBaseEndpoint + "/createTaskBySourceUid2/" + functionName, body)
+    return Util.convertToResult(res)
+
+
+@multimethod(str, str, str, str, str, bool, dict)
+def createTaskBySourceUid2(taskName, taskType, sourceUid, functionName, methodName, inbuilt, params):
+    body = {
+        "taskName": taskName,
+        "taskType": taskType,
+        "sourceUid": sourceUid,
+        "methodName": methodName,
+        "inbuilt": inbuilt,
+        "params": params
+    }
+
+    res = HttpRequestUtil.post(functionBaseEndpoint + "/createTaskBySourceUid2/" + functionName, body)
+    return Util.convertToResult(res)
+
+
+@multimethod(str, str, str, str, str, str, bool, dict)
+def createTaskBySourceUid2(taskName, taskType, sourceUid, appName, functionName, methodName, inbuilt, params):
+    body = {
+        "taskName": taskName,
+        "taskType": taskType,
+        "appName": appName,
+        "sourceUid": sourceUid,
+        "methodName": methodName,
+        "inbuilt": inbuilt,
+        "params": params
+    }
+
+    res = HttpRequestUtil.post(functionBaseEndpoint + "/createTaskBySourceUid2/" + functionName, body)
     return Util.convertToResult(res)
 
 
@@ -164,9 +270,8 @@ def createFunctionSysTask(taskName, taskType, appName, functionName, functionPar
         "taskName": taskName,
         "taskType": taskType,
         "appName": appName,
-        "functionName": functionName,
         "functionParams": functionParams
     }
 
-    res = HttpRequestUtil.post(functionBaseEndpoint + "/createFunctionSysTask", body)
+    res = HttpRequestUtil.post(functionBaseEndpoint + "/createFunctionSysTask/" + functionName, body)
     return Util.convertToResult(res)
