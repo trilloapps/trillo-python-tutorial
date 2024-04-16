@@ -1,10 +1,7 @@
 import ast
 
 import requests
-from cachetools import TTLCache
 from multimethods import multimethod
-import config
-from src.collager.pojo.ResultApi import Result
 
 
 @multimethod(str, dict)
