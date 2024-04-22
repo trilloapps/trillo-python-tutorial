@@ -250,3 +250,18 @@ def isFileProcessed(fileName, folderName, op):
 def incrementCounter(className, counterName):
     return BaseApi.remoteCall("DSApi", "incrementCounter", className, counterName)
 
+def commitTx():
+    """
+    In dev-env, all DB calls are transactional therefore a transaction can't be committed (not needed).
+    This limitation may be removed in the future.
+    """
+    pass
+
+def rollbackTx():
+    """
+    In dev-env, all DB calls are transactional therefore a transaction can't be rolled back.
+    This limitation may be removed in the future.
+    """
+    pass
+
+

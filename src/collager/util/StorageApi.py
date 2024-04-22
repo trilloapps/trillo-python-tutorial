@@ -1,5 +1,10 @@
+import json
+
+import requests
 from multimethods import multimethod
 
+from src.collager.pojo.ResultApi import Result
+from src.collager.util import HttpUtil
 from src.collager.util.BaseApi import BaseApi
 from src.collager.util.Util import Util
 from src.collager.util.HttpRequestUtil import HttpRequestUtil
@@ -183,29 +188,58 @@ def shareWithTenants(params):
 
 @multimethod(str, str)
 def copyLargeFileToBucket(sourceFilePath, targetFilePath):
-    body = {"sourceFilePath": sourceFilePath,
-            "targetFilePath": targetFilePath}
-    res = HttpRequestUtil.post(storageBaseEndpoint + "/copyLargeFileToBucket", body)
-    return Util.convertToResult(res)
+    return uploadFile(Proxy.getServerUrl() + "/ds/copyFileToBucket", "", None, sourceFilePath,
+                      targetFilePath)
 
 
 @multimethod(str, str, str)
 def copyLargeFileToBucket(bucketName, sourceFilePath, targetFilePath):
-    body = {"sourceFilePath": sourceFilePath,
-            "targetFilePath": targetFilePath,
-            "bucketName": bucketName}
-    res = HttpRequestUtil.post(storageBaseEndpoint + "/copyLargeFileToBucket", body)
-    return Util.convertToResult(res)
+    return uploadFile(Proxy.getServerUrl() + "/ds/copyFileToBucket", bucketName, None, sourceFilePath,
+                      targetFilePath)
 
 
 @multimethod(str, str, str, str)
 def copyLargeFileToBucket(bucketName, serviceAccountPropName, sourceFilePath, targetFilePath):
-    body = {"sourceFilePath": sourceFilePath,
-            "targetFilePath": targetFilePath,
-            "bucketName": bucketName,
-            "serviceAccountPropName": serviceAccountPropName}
-    res = HttpRequestUtil.post(storageBaseEndpoint + "/copyLargeFileToBucket", body)
-    return Util.convertToResult(res)
+    return uploadFile(Proxy.getServerUrl() + "/ds/copyFileToBucket", bucketName, serviceAccountPropName , sourceFilePath, targetFilePath)
+
+def uploadFile(url, bucketName, serviceAccountPropName, sourceFilePath, targetFilePath):
+    try:
+        headers = {
+            "Authorization": "Bearer " + Proxy.getAccessToken(),
+            "x-org-name": Proxy.getOrgName(),
+            "x-app-name": Proxy.getAppName()
+        }
+
+        files = {
+            'file': open(sourceFilePath, 'rb'),
+            'bucketName': (None, bucketName),
+            'targetFilePath': (None, targetFilePath)
+        }
+
+        if serviceAccountPropName is not None:
+            files['serviceAccountPropName'] = (None, serviceAccountPropName)
+
+        response = requests.post(url, headers=headers, files=files)
+
+        if response.status_code == 200:
+            return Result.getSuccessResultWithData(response.text)
+        else:
+            if response.content:
+                try:
+                    content = response.content.decode('utf-8')
+                    data = json.loads(content)
+                    if "_rtag" in data:
+                        result = Result(data)
+                        return result
+                    return Result.getFailedResult(
+                        "Invalid response received, HTTP code: " + str(response.status_code) + "\n" + content)
+                except Exception as exc:
+                    pass
+                return Result.getFailedResult("Invalid response received, HTTP code: " + str(response.status_code))
+            else:
+                return Result.getFailedResult("No response received, HTTP code: " + str(response.status_code))
+    except Exception as exc:
+        return Result.getFailedResult(str(exc))
 
 
 @multimethod(str, str)
