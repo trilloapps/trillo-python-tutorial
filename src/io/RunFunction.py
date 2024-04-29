@@ -141,7 +141,7 @@ class RunFunction:
             else:
                 Log.info("Result: \n" + BaseApi.asJSONPrettyString(res))
         except Exception as e:
-            Log.error("Failed to call function: " + functionName)
+            Log.error("Failed to call function: " + functionName + str(e))
 
 
 if __name__ == "__main__":

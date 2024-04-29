@@ -1,0 +1,9 @@
+{
+  "functionName" : "StaticAnnotationsOnly",
+  "methodName" : "testing",
+  "parameters" : {
+    "input_file": "BrainMRI.mp4",
+    "content_type": "video/mp4"
+}
+}
+
