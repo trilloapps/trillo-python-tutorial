@@ -1,7 +1,6 @@
 {
-   "serverUrl":"<your workbench url>",
+   "serverUrl":"https://api.eng-dev-1.trilloapps.com",
    "userId":"Defined as environment variable TRILLO_WB_USER_ID.",
    "password":"Defined as environment variable TRILLO_WB_USER_PASSWORD",
-
-   "functionDetailsFile" : "functions/Lessons/SampleFunction.postMethodChangeMe.json"
+   "functionDetailsFile" : "functions/test.json"
 }

@@ -1,0 +1,11 @@
+{
+  "functionName" : "AddingFrameToImage",
+  "methodName" : "testing",
+  "parameters" : {
+    "input_file": "text.mp4",
+    "content_type": "video/mp4",
+    "input_image": "dicom1.jpeg"
+  }
+}
+
+
