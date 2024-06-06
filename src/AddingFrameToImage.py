@@ -10,12 +10,16 @@ import numpy as np
 # Load the video
 bucket_name = StorageApi.getBucketName()
 
+
 @Api(httpMethod="post")
 def testing(parameters):
-    input_file_path = parameters.get('input_file')
-    input_image_path = parameters.get('input_image')
-    LogApi.auditLogInfo("File: " + input_file_path)
-    content_type = parameters.get('content_type')
+    # input_file_path = parameters.get('input_file')
+    input_file_path = "text.mp4"
+    # input_image_path = parameters.get('input_image')
+    input_image_path = "dicom1.jpeg"
+    # LogApi.auditLogInfo("File: " + input_file_path)
+    # content_type = parameters.get('content_type')
+    content_type = "video/mp4"
     file_id = parameters.get('file_id')
     # startTime = parameters.get('startTime')
     # endTime = parameters.get('endTime')
