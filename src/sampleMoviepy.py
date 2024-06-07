@@ -4,7 +4,10 @@ import os
 import tempfile
 from src.collager.pojo.ResultApi import Result
 from src.collager.util import StorageApi, LogApi, DSApi
+from moviepy.editor import VideoFileClip, ImageClip
+from moviepy.video.compositing.CompositeVideoClip import CompositeVideoClip
 import cv2
+
 import numpy as np
 
 # Load the video
@@ -14,7 +17,7 @@ bucket_name = StorageApi.getBucketName()
 @Api(httpMethod="post")
 def testing(parameters):
     # input_file_path = parameters.get('input_file')
-    input_file_path = "text.mp4"
+    input_file_path = "DTextD.mp4"
     # input_image_path = parameters.get('input_image')
     input_image_path = "dicom1.jpeg"
     # LogApi.auditLogInfo("File: " + input_file_path)
@@ -50,59 +53,32 @@ def testing(parameters):
     LogApi.auditLogInfo("Image FILE OPENED")
 
     try:
-        cap = cv2.VideoCapture(outputFilePath)
+        video = VideoFileClip(outputFilePath)
+        imageCv= cv2.imread(imageFilePath)
+        image = ImageClip(imageCv)
 
-        # Get the video properties
-        fps = int(cap.get(cv2.CAP_PROP_FPS))
-        frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-        frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        video_duration = video.duration
 
-        # Desired timestamp to add the image (in seconds)
-        start_timestamp = 2
-        end_timestamp = 6
-        fourcc = cv2.VideoWriter_fourcc(*'avc1')
-        out = cv2.VideoWriter(outputFilePath + f"_no_text.{extension}", fourcc, fps, (frame_width, frame_height))
+        start_sec = 2  # Start time in seconds
+        end_sec = 6
 
-        if not out.isOpened():
-            LogApi.auditLogInfo("Error: Could not open the video writer.")
-            return Result.getFailedResult("Error: Could not open the video writer.")
-        else:
-            LogApi.auditLogInfo("Video writer opened successfully.")
+        if start_sec < 0 or start_sec >= video_duration:
+            raise ValueError("Start time must be between 0 and the video duration")
+        if end_sec <= start_sec or end_sec > video_duration:
+            raise ValueError("End time must be after the start time and within the video length")
 
-        # Read frames until the desired timestamp
-        while cap.isOpened():
-            ret, frame = cap.read()
-            if not ret:
-                break
+        background_clip = video.subclip(t_start=0, t_end=video_duration)
 
-            # Get the current timestamp
-            current_timestamp = cap.get(cv2.CAP_PROP_POS_MSEC) / 1000.0
+        # Set image clip duration to match the image display time
+        image_clip = image.set_duration(end_sec - start_sec)
 
-            # Check if we've reached the desired timestamp
-            # if start_timestamp <= current_timestamp <= end_timestamp:
-            if current_timestamp >= start_timestamp and current_timestamp <= end_timestamp:
+        image_clip = image_clip.resize(newsize=background_clip.size)
 
-                image_with_alpha = cv2.imread(imageFilePath)
+        final_clip = CompositeVideoClip([background_clip, image_clip.set_start(start_sec)])
 
-                if image_with_alpha.shape[2] == 4:
-                    image = cv2.cvtColor(image_with_alpha, cv2.COLOR_BGRA2BGR)
-                else:
-                    image = image_with_alpha
+        # Write the final clip to the output video file
+        final_clip.write_videofile(outputFilePath + f"_no_text.{extension}")
 
-                # Resize the image to fit the frame
-                image = cv2.resize(image, (frame_width, frame_height))
-
-                # You can adjust the position of the image as per your requirements
-                x_offset = 0  # adjust the x offset
-                y_offset = 0  # adjust the y offset
-                frame[y_offset:y_offset + image.shape[0], x_offset:x_offset + image.shape[1]] = image
-
-            out.write(frame)
-
-        # Release everything when done
-        LogApi.auditLogInfo("Outside Loop")
-        cap.release()
-        out.release()
         LogApi.auditLogInfo("Opening modified file")
         f = open(outputFilePath + f"_no_text.{extension}", mode="rb")
         LogApi.auditLogInfo("File Opened")
