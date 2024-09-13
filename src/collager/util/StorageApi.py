@@ -150,6 +150,10 @@ def getFilesPage(bucketName, pathName, versioned):
             "versioned": versioned}
     return HttpRequestUtil.post(storageBaseEndpoint + "/getFilesPage", body)
 
+@multimethod(dict)
+def getContent(doc):
+    return BaseApi.remoteCall("StorageApi", "getContent", doc)
+
 
 @multimethod(str, str, bool, str, int)
 def getFilesPage(bucketName, pathName, versioned, pageToken, pageSize):

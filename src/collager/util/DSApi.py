@@ -48,6 +48,10 @@ def get(className, id):
 def queryOne(className, query):
     return HttpRequestUtil.get(dataBaseEndpoint + "/queryOne/" + str(className) + "?query=" + str(query))
 
+@multimethod(str)
+def queryOne(query):
+    return BaseApi.remoteCall("DSApi", "queryOne", query)
+
 
 @multimethod(str, str, bool)
 def queryOne(className, query, includeDeleted):
@@ -71,8 +75,7 @@ def queryMany(className, query):
 
 @multimethod(str)
 def queryBySqlStatement(sqlStatement):
-    return HttpRequestUtil.get(
-        dataBaseEndpoint + "/queryBySqlStatement?sqlStatement=" + sqlStatement)
+    return BaseApi.remoteCall("DSApi", "queryBySqlStatement", sqlStatement)
 
 
 @multimethod(str, str)
